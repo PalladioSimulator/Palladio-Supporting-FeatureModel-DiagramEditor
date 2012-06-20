@@ -15,6 +15,7 @@ import org.eclipse.graphiti.mm.GraphicsAlgorithmContainer;
 import org.eclipse.graphiti.mm.Property;
 import org.eclipse.graphiti.mm.algorithms.Ellipse;
 import org.eclipse.graphiti.mm.algorithms.Polygon;
+import org.eclipse.graphiti.mm.algorithms.Polyline;
 import org.eclipse.graphiti.mm.algorithms.styles.Point;
 import org.eclipse.graphiti.mm.pictograms.Connection;
 import org.eclipse.graphiti.mm.pictograms.ConnectionDecorator;
@@ -167,11 +168,16 @@ public class UpdateRelationshipFeature extends AbstractUpdateFeature {
         Point p2 = calculatePoint(outerConn[1], POLIGON_SIZE);
 
         // polygon with the calculated points
-        int[] xy = new int[] { p0.getX(), p0.getY(), p2.getX(), p2.getY(), p1.getX(), p1.getY() };
+        int[] xyz = new int[] { p0.getX(), p0.getY(), p2.getX(), p2.getY(), p1.getX(), p1.getY() };
         // int beforeAfter[] = new int[] { 0, 0, 20, width / 2, width / 2, 20 };
-        Polygon relationGA = Graphiti.getGaService().createPolygon(pe, xy);
+        Polygon relationGA = Graphiti.getGaService().createPolygon(pe, xyz);
         relationGA.setLineVisible(false);
-        relationGA.setBackground(manageColor(getRelationshipColor(group)));
+        if (RelationType.XOR.equals(BOUtil.getRelationType(group))) {
+            relationGA.setBackground(manageColor(ColorConstant.WHITE));
+        } else {
+            relationGA.setBackground(manageColor(ColorConstant.BLACK));
+        }
+        
         return relationGA;
     }
 
@@ -190,7 +196,11 @@ public class UpdateRelationshipFeature extends AbstractUpdateFeature {
         relationGA.setHeight(15);
         relationGA.setWidth(15);
         relationGA.setForeground(manageColor(IColorConstant.BLACK));
-        relationGA.setBackground(manageColor(getRelationshipColor(group)));
+        if (RelationType.Mandatory.equals(BOUtil.getRelationType(group))) {
+            relationGA.setBackground(manageColor(ColorConstant.WHITE));
+        } else {
+            relationGA.setBackground(manageColor(ColorConstant.BLACK));
+        }
         relationGA.setLineWidth(2);
 
         return relationGA;
@@ -300,24 +310,6 @@ public class UpdateRelationshipFeature extends AbstractUpdateFeature {
         double y = a.getY() + dis * (ba.getY() / norm);
 
         return Graphiti.getGaService().createPoint((int) x, (int) y);
-    }
-
-    /**
-     * Gets color of the relationship according to the Group type.
-     * 
-     * @param group
-     *            The group.
-     * @return The color.
-     */
-    private IColorConstant getRelationshipColor(Group group) {
-        IColorConstant color = null;
-        if (RelationType.Mandatory.equals(BOUtil.getRelationType(group)) || //
-                RelationType.XOR.equals(BOUtil.getRelationType(group))) {
-            color = ColorConstant.WHITE;
-        } else { // Optional or OR
-            color = ColorConstant.BLACK;
-        }
-        return color;
     }
 
     /**

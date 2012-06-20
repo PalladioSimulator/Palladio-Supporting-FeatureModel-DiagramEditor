@@ -313,9 +313,9 @@ public class UpdateRelationshipFeature extends AbstractUpdateFeature {
         IColorConstant color = null;
         if (RelationType.Mandatory.equals(BOUtil.getRelationType(group)) || //
                 RelationType.XOR.equals(BOUtil.getRelationType(group))) {
-            color = ColorConstant.BLACK;
-        } else { // Optional or OR
             color = ColorConstant.WHITE;
+        } else { // Optional or OR
+            color = ColorConstant.BLACK;
         }
         return color;
     }

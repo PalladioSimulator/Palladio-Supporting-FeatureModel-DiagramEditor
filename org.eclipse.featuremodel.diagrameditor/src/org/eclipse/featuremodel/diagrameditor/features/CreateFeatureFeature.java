@@ -6,6 +6,7 @@ import org.eclipse.featuremodel.FeatureModelFactory;
 import org.eclipse.featuremodel.Group;
 import org.eclipse.featuremodel.diagrameditor.FMEDiagramEditorUtil;
 import org.eclipse.featuremodel.diagrameditor.utilities.BOUtil;
+import org.eclipse.featuremodel.diagrameditor.utilities.BOUtil.RelationType;
 import org.eclipse.featuremodel.diagrameditor.utilities.IdGen;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.ICreateContext;
@@ -16,7 +17,6 @@ import org.eclipse.graphiti.mm.pictograms.Connection;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
-
 
 /**
  * Feature handle creating a new Feature model object.
@@ -151,6 +151,15 @@ public class CreateFeatureFeature extends AbstractCreateFeature {
             addGroup(group, newFeature, parentFeature);
         } else if (parent instanceof Group) { // Add to the the existing Group.
             Group group = (Group) parent;
+
+            // before adding update set relation notation
+            RelationType relType = BOUtil.getRelationType(group);
+            if (RelationType.Mandatory.equals(relType)) {
+                BOUtil.setRelationType(group, RelationType.XOR);
+            } else {
+                BOUtil.setRelationType(group, RelationType.OR);
+            }
+
             // Add the new Feature to the existing Group
             group.getFeatures().add(newFeature);
 

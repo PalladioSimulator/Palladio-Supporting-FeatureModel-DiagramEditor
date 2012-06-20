@@ -174,6 +174,11 @@ public class UpdateRelationshipFeature extends AbstractUpdateFeature {
         relationGA.setLineVisible(false);
         if (RelationType.XOR.equals(BOUtil.getRelationType(group))) {
             relationGA.setBackground(manageColor(ColorConstant.WHITE));
+            int[] linePoints = new int[] { p2.getX(), p2.getY(), p1.getX(), p1.getY() };
+            Polyline relationBorder = Graphiti.getGaService().createPolyline(pe, linePoints);
+            relationBorder.setForeground(manageColor(ColorConstant.BLACK));
+            relationBorder.setLineWidth(2);
+            relationBorder.setLineVisible(true);
         } else {
             relationGA.setBackground(manageColor(ColorConstant.BLACK));
         }

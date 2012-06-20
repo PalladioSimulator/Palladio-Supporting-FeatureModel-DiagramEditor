@@ -3,7 +3,7 @@
 
   <rm:locator searchPathRef="localresources" failOnError="false"/>
   <rm:locator searchPathRef="diagrameditor" failOnError="false"/>
-  <rm:locator searchPathRef="graphiti" failOnError="false" pattern="^org\.eclipse\.graphiti\..*" />
+  <rm:locator searchPathRef="graphiti" failOnError="false" pattern="^org\.eclipse\.graphiti.*" />
   <rm:locator searchPathRef="featuremodel" failOnError="false" />
   
   

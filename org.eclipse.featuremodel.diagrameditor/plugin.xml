@@ -4,8 +4,8 @@
    <extension
          point="org.eclipse.graphiti.ui.diagramTypes">
       <diagramType
-            description="Diagram Type for Feature Model Editor"
-            id="org.eclipse.featuremodel.treeeditor.diagramtype"
+            description="Diagram Type for Feature Diagram Editor"
+            id="org.eclipse.featuremodel.diagrameditor.diagramtype"
             name="Feature Diagram"
             type="Feature Diagram">
       </diagramType>
@@ -13,12 +13,12 @@
    <extension
          point="org.eclipse.graphiti.ui.diagramTypeProviders">
       <diagramTypeProvider
-            class="org.eclipse.featuremodel.treeeditor.diagram.FMEDiagramTypeProvider"
-            description="Diagram Type Provider for Feature Model Editor"
-            id="org.eclipse.featuremodel.treeeditor.diagramtypeprovider"
+            class="org.eclipse.featuremodel.diagrameditor.diagram.FMEDiagramTypeProvider"
+            description="Diagram Type Provider for Feature Diagram Editor"
+            id="org.eclipse.featuremodel.diagrameditor.diagramtypeprovider"
             name="Feature Diagram Type Provider">
          <diagramType
-               id="org.eclipse.featuremodel.treeeditor.diagramtype">
+               id="org.eclipse.featuremodel.diagrameditor.diagramtype">
          </diagramType>
       </diagramTypeProvider>
    </extension>
@@ -26,11 +26,11 @@
          point="org.eclipse.ui.newWizards">
       <category
          name="Feature Model Editor"
-         id="org.eclipse.featuremodel.treeeditor.wizard.category">
+         id="org.eclipse.featuremodel.diagrameditor.wizard.category">
       </category>
       <wizard
-            class="org.eclipse.featuremodel.treeeditor.FMENewWizard"
-            id="org.eclipse.featuremodel.treeeditor.wizard"
+            class="org.eclipse.featuremodel.diagrameditor.FMENewWizard"
+            id="org.eclipse.featuremodel.diagrameditor.wizard"
             name="Feature Diagram">
          <description>
             Creates a new Feature Diagram.
@@ -40,25 +40,25 @@
    <extension
          point="org.eclipse.ui.editors">
       <editor
-            class="org.eclipse.featuremodel.treeeditor.FMEDiagramEditor"
-            contributorClass="org.eclipse.featuremodel.treeeditor.FMEEditorActionBarContributor"
+            class="org.eclipse.featuremodel.diagrameditor.FMEDiagramEditor"
+            contributorClass="org.eclipse.featuremodel.diagrameditor.FMEEditorActionBarContributor"
             default="true"
             extensions="featurediagram"
-            id="org.eclipse.featuremodel.treeeditor.diagrameditor"
+            id="org.eclipse.featuremodel.diagrameditor.diagrameditor"
             name="Feature Diagram">
       </editor>
    </extension>
    <extension point="org.eclipse.ui.popupMenus">
       <objectContribution
-            id="org.eclipse.featuremodel.treeeditor.popup.createwizardaction"
+            id="org.eclipse.featuremodel.diagrameditor.popup.createwizardaction"
             nameFilter="*.featuremodel"
             objectClass="org.eclipse.core.resources.IFile">
          <action
                label="Create Feature Diagram"
-               class="org.eclipse.featuremodel.treeeditor.FMECreateWizardAction"
+               class="org.eclipse.featuremodel.diagrameditor.FMECreateWizardAction"
                menubarPath="additions"
                enablesFor="1"
-               id="org.eclipse.featuremodel.treeeditor.createwizardaction">
+               id="org.eclipse.featuremodel.diagrameditor.createwizardaction">
          </action>
       </objectContribution>
    </extension>

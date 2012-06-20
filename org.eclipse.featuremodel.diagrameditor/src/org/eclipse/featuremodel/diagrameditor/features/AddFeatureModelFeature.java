@@ -12,11 +12,9 @@ import org.eclipse.graphiti.features.context.impl.AddContext;
 import org.eclipse.graphiti.features.context.impl.AreaContext;
 import org.eclipse.graphiti.features.impl.AbstractAddFeature;
 import org.eclipse.graphiti.mm.pictograms.Anchor;
-import org.eclipse.graphiti.mm.pictograms.Connection;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
-
 
 /**
  * Feature handle adding to a diagram a graphical representation of an existing Feature Model
@@ -86,10 +84,6 @@ public class AddFeatureModelFeature extends AbstractAddFeature {
 
         // call the layout feature
         layoutPictogramElement(diagram);
-
-        for (Connection c : getDiagram().getConnections()) {
-            this.updatePictogramElement(c);
-        }
 
         // Return the root pictogram element
         return root;

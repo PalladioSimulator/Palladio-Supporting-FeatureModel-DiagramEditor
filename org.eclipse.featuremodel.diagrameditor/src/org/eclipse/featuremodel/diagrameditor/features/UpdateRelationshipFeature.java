@@ -24,7 +24,6 @@ import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.util.ColorConstant;
 import org.eclipse.graphiti.util.IColorConstant;
 
-
 /**
  * Feature handle updating any changes made to a Group model object.
  * 
@@ -164,8 +163,8 @@ public class UpdateRelationshipFeature extends AbstractUpdateFeature {
 
         // calculate new polygon points locations according to position of two outer connections
         ILocation p0 = Graphiti.getPeService().getLocationRelativeToDiagram(outerConn[0].getStart());
-        Point p1 = calculatePoint(outerConn[0]);
-        Point p2 = calculatePoint(outerConn[1]);
+        Point p1 = calculatePoint(outerConn[0], POLIGON_SIZE);
+        Point p2 = calculatePoint(outerConn[1], POLIGON_SIZE);
 
         // polygon with the calculated points
         int[] xy = new int[] { p0.getX(), p0.getY(), p2.getX(), p2.getY(), p1.getX(), p1.getY() };
@@ -263,41 +262,42 @@ public class UpdateRelationshipFeature extends AbstractUpdateFeature {
 
         // run trough all connections a look for X coordinate of the connection end
         for (Connection conn : connections) {
-            ILocation anchorLocation = Graphiti.getPeService().getLocationRelativeToDiagram(conn.getEnd());
+            Point p = calculatePoint(conn, 40);
 
-            if (anchorLocation.getX() < xMin) {
+            if (p.getX() < xMin) {
                 result[0] = conn;
-                xMin = anchorLocation.getX();
+                xMin = p.getX();
             }
 
-            if (anchorLocation.getX() > xMax) {
+            if (p.getX() >= xMax) {
                 result[1] = conn;
-                xMax = anchorLocation.getX();
+                xMax = p.getX();
             }
         }
         return result;
     }
 
     /**
-     * Calculates a point of polygon represents set relation in according to position of the
-     * connection.
+     * Calculates the coordinates of a connection line point in according to the given distance
+     * <code>dis</code> from the connection start point.
      * 
      * @param connection
-     *            The connection.
+     *            the connection.
+     * @param dis
+     *            the distance from the connection start point.
      * @return The calculated point.
      */
-    private Point calculatePoint(Connection connection) {
-        double m = POLIGON_SIZE;
-
+    private Point calculatePoint(Connection connection, double dis) {
+        // determine line start and end points
         ILocation a = Graphiti.getPeService().getLocationRelativeToDiagram(connection.getStart());
         ILocation b = Graphiti.getPeService().getLocationRelativeToDiagram(connection.getEnd());
-
+        // line vector
         Point ba = Graphiti.getGaService().createPoint(b.getX() - a.getX(), b.getY() - a.getY());
-
+        // norm of the line vector
         double norm = Math.sqrt(ba.getX() * ba.getX() + ba.getY() * ba.getY());
-
-        double x = a.getX() + (m / norm) * (ba.getX());
-        double y = a.getY() + (m / norm) * (ba.getY());
+        // calculate coordinates
+        double x = a.getX() + dis * (ba.getX() / norm);
+        double y = a.getY() + dis * (ba.getY() / norm);
 
         return Graphiti.getGaService().createPoint((int) x, (int) y);
     }

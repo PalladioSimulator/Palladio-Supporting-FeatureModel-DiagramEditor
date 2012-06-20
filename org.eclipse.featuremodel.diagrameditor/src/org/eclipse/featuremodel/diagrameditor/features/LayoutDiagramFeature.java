@@ -23,8 +23,7 @@ import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
 
 /**
- * Layouts the tree structure of the Feature Model diagram. Refresh is triggered automatically by
- * the changes on the diagram model.
+ * Layouts the tree structure of the Feature Diagram.
  * 
  * @author Alexander Moor
  */
@@ -77,6 +76,11 @@ public class LayoutDiagramFeature extends AbstractLayoutFeature {
         graph.setDefaultPadding(new Insets(PADDING));
         new CompoundDirectedGraphLayout().visit(graph);
         mapGraphCoordinatesToDiagram(graph);
+
+        // update all Group relations to given connections
+        for (Connection c : getDiagram().getConnections()) {
+            this.updatePictogramElement(c);
+        }
 
         return true;
     }

@@ -33,9 +33,8 @@ public class FMEDiagramEditor extends DiagramEditor {
      */
     @Override
     protected void configureGraphicalViewer() {
-        // TODO Auto-generated method stub
         super.configureGraphicalViewer();
-
+        // add zooming action with "CTRL + Mouse Wheel"
         GraphicalViewer viewer = getGraphicalViewer();
         viewer.setProperty(MouseWheelHandler.KeyGenerator.getKey(SWT.MOD1), MouseWheelZoomHandler.SINGLETON);
     }

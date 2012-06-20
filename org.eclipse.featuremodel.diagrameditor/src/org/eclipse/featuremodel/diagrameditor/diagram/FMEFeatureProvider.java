@@ -12,6 +12,7 @@ import org.eclipse.featuremodel.diagrameditor.features.AddGroupFeature;
 import org.eclipse.featuremodel.diagrameditor.features.CreateFeatureFeature;
 import org.eclipse.featuremodel.diagrameditor.features.DeleteFeatureFeature;
 import org.eclipse.featuremodel.diagrameditor.features.DirectEditFeatureFeature;
+import org.eclipse.featuremodel.diagrameditor.features.LayoutDiagramActionFeature;
 import org.eclipse.featuremodel.diagrameditor.features.LayoutDiagramFeature;
 import org.eclipse.featuremodel.diagrameditor.features.LayoutFeatureFeature;
 import org.eclipse.featuremodel.diagrameditor.features.MoveFeatureFeature;
@@ -44,7 +45,6 @@ import org.eclipse.graphiti.features.context.IUpdateContext;
 import org.eclipse.graphiti.features.custom.ICustomFeature;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.ui.features.DefaultFeatureProvider;
-
 
 /**
  * {@link FMEFeatureProvider} is used by the Graphiti framework to find out which operations are
@@ -198,19 +198,15 @@ public class FMEFeatureProvider extends DefaultFeatureProvider {
      */
     @Override
     public ICustomFeature[] getCustomFeatures(ICustomContext context) {
-        List<ICustomFeature> retList = new ArrayList<ICustomFeature>();
-        PictogramElement[] pes = context.getPictogramElements();
+        List<ICustomFeature> result = new ArrayList<ICustomFeature>();
 
-        if (pes != null && pes.length == 1) {
-            Object bo = getBusinessObjectForPictogramElement(pes[0]);
-            if (bo instanceof Group) {
-                retList.add(new SetOptionalRelationTypeFeature(this));
-                retList.add(new SetMandatoryRelationTypeFeature(this));
-                retList.add(new SetORRelationTypeFeature(this));
-                retList.add(new SetXORRelationTypeFeature(this));
-            }
-        }
-        return retList.toArray(new ICustomFeature[retList.size()]);
+        result.add(new SetOptionalRelationTypeFeature(this));
+        result.add(new SetMandatoryRelationTypeFeature(this));
+        result.add(new SetORRelationTypeFeature(this));
+        result.add(new SetXORRelationTypeFeature(this));
+
+        result.add(new LayoutDiagramActionFeature(this));
+        return result.toArray(new ICustomFeature[result.size()]);
     }
 
     /**

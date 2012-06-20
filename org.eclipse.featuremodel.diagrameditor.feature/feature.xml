@@ -212,11 +212,6 @@ Each party waives its rights to a jury trial in any resulting
 litigation.
    </license>
 
-   <url>
-      <discovery label="EMF Feature Model" url="http://download.eclipse.org/modeling/emft/featuremodel/update-site/"/>
-      <discovery label="Graphiti" url="http://download.eclipse.org/graphiti/updates/nightly/"/>
-   </url>
-
    <plugin
          id="org.eclipse.featuremodel.diagrameditor"
          download-size="0"

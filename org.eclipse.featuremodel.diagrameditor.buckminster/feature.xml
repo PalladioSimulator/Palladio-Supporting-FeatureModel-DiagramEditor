@@ -16,6 +16,11 @@
       [Enter License Description here.]
    </license>
 
+   <url>
+      <discovery label="EMF Feature Model" url="http://download.eclipse.org/modeling/emft/featuremodel/update-site/"/>
+      <discovery label="Graphiti" url="http://download.eclipse.org/graphiti/updates/nightly/"/>
+   </url>
+
    <includes
          id="org.eclipse.featuremodel.diagrameditor.feature"
          version="0.0.0"

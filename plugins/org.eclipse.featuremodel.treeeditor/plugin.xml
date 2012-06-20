@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.graphiti.ui.diagramTypes">
+      <diagramType
+            description="Diagram Type for Feature Model Editor"
+            id="de.fzi.se.eclipse.featuremodel.treeeditor.diagramtype"
+            name="Feature Diagram"
+            type="Feature Diagram">
+      </diagramType>
+   </extension>
+   <extension
+         point="org.eclipse.graphiti.ui.diagramTypeProviders">
+      <diagramTypeProvider
+            class="de.fzi.se.eclipse.featuremodel.treeeditor.diagram.FMEDiagramTypeProvider"
+            description="Diagram Type Provider for Feature Model Editor"
+            id="de.fzi.se.eclipse.featuremodel.treeeditor.diagramtypeprovider"
+            name="Feature Diagram Type Provider">
+         <diagramType
+               id="de.fzi.se.eclipse.featuremodel.treeeditor.diagramtype">
+         </diagramType>
+      </diagramTypeProvider>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+         name="Feature Model Editor"
+         id="de.fzi.se.eclipse.featuremodel.treeeditor.wizard.category">
+      </category>
+      <wizard
+            class="de.fzi.se.eclipse.featuremodel.treeeditor.FMENewWizard"
+            id="de.fzi.se.eclipse.featuremodel.treeeditor.wizard"
+            name="Feature Diagram">
+         <description>
+            Creates a new Feature Diagram.
+         </description>
+      </wizard>
+   </extension>	    
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="de.fzi.se.eclipse.featuremodel.treeeditor.FMEDiagramEditor"
+            contributorClass="de.fzi.se.eclipse.featuremodel.treeeditor.FMEEditorActionBarContributor"
+            default="true"
+            extensions="featurediagram"
+            id="de.fzi.se.eclipse.featuremodel.treeeditor.diagrameditor"
+            name="Feature Diagram">
+      </editor>
+   </extension>
+   <extension point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            id="de.fzi.se.eclipse.featuremodel.treeeditor.popup.createwizardaction"
+            nameFilter="*.featuremodel"
+            objectClass="org.eclipse.core.resources.IFile">
+         <action
+               label="Create Feature Diagram"
+               class="de.fzi.se.eclipse.featuremodel.treeeditor.FMECreateWizardAction"
+               menubarPath="additions"
+               enablesFor="1"
+               id="de.fzi.se.eclipse.featuremodel.treeeditor.createwizardaction">
+         </action>
+      </objectContribution>
+   </extension>
+</plugin>

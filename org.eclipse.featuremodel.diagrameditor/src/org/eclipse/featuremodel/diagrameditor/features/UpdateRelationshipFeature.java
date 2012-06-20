@@ -152,9 +152,8 @@ public class UpdateRelationshipFeature extends AbstractUpdateFeature {
      *            The Group the set relation associated to.
      * @param pe
      *            The container for the new graphical element.
-     * @return The new graphical element.
      */
-    private Polygon getSetRelationGraphic(Group group, PictogramElement pe) {
+    private void getSetRelationGraphic(Group group, PictogramElement pe) {
         // Create the graphic representation of relation.
         // get all connections belong to group
         List<Connection> connections = BOUtil.getAllPictogramElementsForBusinessObject(group, Connection.class,
@@ -166,24 +165,30 @@ public class UpdateRelationshipFeature extends AbstractUpdateFeature {
         ILocation p0 = Graphiti.getPeService().getLocationRelativeToDiagram(outerConn[0].getStart());
         Point p1 = calculatePoint(outerConn[0], POLIGON_SIZE);
         Point p2 = calculatePoint(outerConn[1], POLIGON_SIZE);
-
-        // polygon with the calculated points
-        int[] xyz = new int[] { p0.getX(), p0.getY(), p2.getX(), p2.getY(), p1.getX(), p1.getY() };
-        // int beforeAfter[] = new int[] { 0, 0, 20, width / 2, width / 2, 20 };
-        Polygon relationGA = Graphiti.getGaService().createPolygon(pe, xyz);
-        relationGA.setLineVisible(false);
+        int x0 = p0.getX();
+        int y0 = p0.getY();
+        int x1 = p1.getX();
+        int y1 = p1.getY();
+        int x2 = p2.getX();
+        int y2 = p2.getY();
+        int xCurveMiddle = x1 + ((x2 - x1) / 2) + ((x2 - x1) / 4);
+        int yCurveMiddle = y2 + ((y1 - y2) / 2) + ((y1 - y2) / 4);
+        int curveSmoothing = (int) (POLIGON_SIZE);
+        
         if (RelationType.XOR.equals(BOUtil.getRelationType(group))) {
-            relationGA.setBackground(manageColor(ColorConstant.WHITE));
-            int[] linePoints = new int[] { p2.getX(), p2.getY(), p1.getX(), p1.getY() };
-            Polyline relationBorder = Graphiti.getGaService().createPolyline(pe, linePoints);
+            int[] points = new int[] { x1, y1, xCurveMiddle , yCurveMiddle, x2, y2 };
+            int[] beforeAfter = new int[]{0, 0, curveSmoothing, curveSmoothing, 0, 0};
+            Polyline relationBorder = Graphiti.getGaService().createPolyline(pe, points, beforeAfter);
             relationBorder.setForeground(manageColor(ColorConstant.BLACK));
             relationBorder.setLineWidth(2);
             relationBorder.setLineVisible(true);
         } else {
+            int[] points = new int[] { x0, y0, x1, y1, xCurveMiddle , yCurveMiddle, x2, y2 };
+            int[] beforeAfter = new int[]{0, 0, 0, 0, curveSmoothing, curveSmoothing, 0, 0};
+            Polygon relationGA = Graphiti.getGaService().createPolygon(pe, points, beforeAfter);
+            relationGA.setLineVisible(false);
             relationGA.setBackground(manageColor(ColorConstant.BLACK));
         }
-        
-        return relationGA;
     }
 
     /**

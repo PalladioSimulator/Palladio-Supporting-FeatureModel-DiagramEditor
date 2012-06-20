@@ -18,6 +18,7 @@
 
    <includes
          id="org.eclipse.featuremodel.diagrameditor.feature"
-         version="0.0.0"/>
+         version="0.0.0"
+         name=""/>
 
 </feature>

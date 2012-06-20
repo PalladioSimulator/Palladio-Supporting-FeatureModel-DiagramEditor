@@ -489,7 +489,8 @@ public class FMEWizardPage extends WizardPage implements Listener {
             // already exist
             if (isDiagramFileExist()) {
                 setMessage(
-                        "The Feature Diagram file with the same name already exists in this folder. It will be overwritten!",
+                        "The Feature Diagram file with the same name already " 
+                        + "exists in this folder. It will be overwritten!",
                         IMessageProvider.WARNING);
             }
         }

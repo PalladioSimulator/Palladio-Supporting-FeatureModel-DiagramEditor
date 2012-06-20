@@ -209,7 +209,9 @@ public class FMEDiagramEditorUtil {
      *            The URI of Feature Model.
      * @return the loaded Feature Model model.
      */
-    private static FeatureModel loadFeatureModelModel(final TransactionalEditingDomain editingDomain, final URI modelURI) {
+    private static FeatureModel loadFeatureModelModel(
+                                    final TransactionalEditingDomain editingDomain, 
+                                    final URI modelURI) {
         editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
             @Override
             protected void doExecute() {

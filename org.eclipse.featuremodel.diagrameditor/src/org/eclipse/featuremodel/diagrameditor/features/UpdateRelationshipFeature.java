@@ -171,10 +171,22 @@ public class UpdateRelationshipFeature extends AbstractUpdateFeature {
         int y1 = p1.getY();
         int x2 = p2.getX();
         int y2 = p2.getY();
-        int xCurveMiddle = x1 + ((x2 - x1) / 2) + ((x2 - x1) / 4);
-        int yCurveMiddle = y2 + ((y1 - y2) / 2) + ((y1 - y2) / 4);
+        
+        // if both points are on the same horizontal or vertical line as the
+        // source point, add or subtract some pixels to ensure a curve is visible
+        int xCurveMiddle = x1 + ((x2 - x1) / 2);
+        int yCurveMiddle = y2 + ((y1 - y2) / 2);        
+        if (xCurveMiddle != x0) {
+            xCurveMiddle -= (x0 - xCurveMiddle) / 2;
+        }
+        if (yCurveMiddle != y0) {
+            yCurveMiddle -= (y0 - yCurveMiddle) / 2;
+        }
+        
+        // define the degree rounding of the curve
         int curveSmoothing = (int) (POLIGON_SIZE);
         
+        // draw a filled polygon or a line only depending on the group type
         if (RelationType.XOR.equals(BOUtil.getRelationType(group))) {
             int[] points = new int[] { x1, y1, xCurveMiddle , yCurveMiddle, x2, y2 };
             int[] beforeAfter = new int[]{0, 0, curveSmoothing, curveSmoothing, 0, 0};

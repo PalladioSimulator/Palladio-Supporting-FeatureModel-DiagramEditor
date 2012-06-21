@@ -30,6 +30,7 @@
       </category>
       <wizard
             class="org.eclipse.featuremodel.diagrameditor.FMENewWizard"
+            icon="icons/featuremodel.png"
             id="org.eclipse.featuremodel.diagrameditor.wizard"
             name="Feature Diagram">
          <description>
@@ -44,6 +45,7 @@
             contributorClass="org.eclipse.featuremodel.diagrameditor.FMEEditorActionBarContributor"
             default="true"
             extensions="featurediagram"
+            icon="icons/featuremodel.png"
             id="org.eclipse.featuremodel.diagrameditor.diagrameditor"
             name="Feature Diagram">
       </editor>
@@ -54,11 +56,12 @@
             nameFilter="*.featuremodel"
             objectClass="org.eclipse.core.resources.IFile">
          <action
-               label="Create Feature Diagram"
                class="org.eclipse.featuremodel.diagrameditor.FMECreateWizardAction"
-               menubarPath="additions"
                enablesFor="1"
-               id="org.eclipse.featuremodel.diagrameditor.createwizardaction">
+               icon="icons/featuremodel.png"
+               id="org.eclipse.featuremodel.diagrameditor.createwizardaction"
+               label="Create Feature Diagram"
+               menubarPath="additions">
          </action>
       </objectContribution>
    </extension>

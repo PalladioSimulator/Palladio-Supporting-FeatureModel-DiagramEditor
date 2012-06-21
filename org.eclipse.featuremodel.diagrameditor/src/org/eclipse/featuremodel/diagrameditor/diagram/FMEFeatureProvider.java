@@ -16,6 +16,7 @@ import org.eclipse.featuremodel.diagrameditor.features.LayoutDiagramActionFeatur
 import org.eclipse.featuremodel.diagrameditor.features.LayoutDiagramFeature;
 import org.eclipse.featuremodel.diagrameditor.features.LayoutFeatureFeature;
 import org.eclipse.featuremodel.diagrameditor.features.MoveFeatureFeature;
+import org.eclipse.featuremodel.diagrameditor.features.RemovFeatureFeature;
 import org.eclipse.featuremodel.diagrameditor.features.ResizeSetRelationFeature;
 import org.eclipse.featuremodel.diagrameditor.features.SetMandatoryRelationTypeFeature;
 import org.eclipse.featuremodel.diagrameditor.features.SetORRelationTypeFeature;
@@ -31,6 +32,7 @@ import org.eclipse.graphiti.features.IDirectEditingFeature;
 import org.eclipse.graphiti.features.ILayoutFeature;
 import org.eclipse.graphiti.features.IMoveShapeFeature;
 import org.eclipse.graphiti.features.IReconnectionFeature;
+import org.eclipse.graphiti.features.IRemoveFeature;
 import org.eclipse.graphiti.features.IResizeShapeFeature;
 import org.eclipse.graphiti.features.IUpdateFeature;
 import org.eclipse.graphiti.features.context.IAddContext;
@@ -40,6 +42,7 @@ import org.eclipse.graphiti.features.context.IDirectEditingContext;
 import org.eclipse.graphiti.features.context.ILayoutContext;
 import org.eclipse.graphiti.features.context.IMoveShapeContext;
 import org.eclipse.graphiti.features.context.IReconnectionContext;
+import org.eclipse.graphiti.features.context.IRemoveContext;
 import org.eclipse.graphiti.features.context.IResizeShapeContext;
 import org.eclipse.graphiti.features.context.IUpdateContext;
 import org.eclipse.graphiti.features.custom.ICustomFeature;
@@ -249,9 +252,34 @@ public class FMEFeatureProvider extends DefaultFeatureProvider {
         return super.getResizeShapeFeature(context);
     }
 
+    /**
+     * Reconnection features handle the change of a connection's start or end anchor. This
+     * implementation forbid the reconnection.
+     * 
+     * @param context
+     *            the context
+     * @return <code>null</code> to forbid the reconnection
+     */
     @Override
     public IReconnectionFeature getReconnectionFeature(IReconnectionContext context) {
         return null;
+    }
+
+    /**
+     * Remove features remove the graphical representations of Feature Model objects.
+     * 
+     * @param context
+     *            the context
+     * @return remove feature according to the given context
+     */
+    @Override
+    public IRemoveFeature getRemoveFeature(IRemoveContext context) {
+        Object obj = getBusinessObjectForPictogramElement(context.getPictogramElement());
+        if (obj instanceof Feature) {
+            return new RemovFeatureFeature(this);
+        }
+
+        return super.getRemoveFeature(context);
     }
 
     // /**

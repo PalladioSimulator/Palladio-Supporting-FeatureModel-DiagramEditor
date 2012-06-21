@@ -115,7 +115,7 @@ public class UpdateRelationshipFeature extends AbstractUpdateFeature {
             deleteSingleRelations(group);
         }
         // create or update graphical representation of set relation
-        getSetRelationGraphic(group, relationPE);
+        createSetRelationGraphic(group, relationPE);
     }
 
     /**
@@ -142,7 +142,7 @@ public class UpdateRelationshipFeature extends AbstractUpdateFeature {
         }
 
         // create graphical representation of single relation
-        getSingleRelationGraphic(group, cd);
+        createSingleRelationGraphic(group, cd);
     }
 
     /**
@@ -153,7 +153,7 @@ public class UpdateRelationshipFeature extends AbstractUpdateFeature {
      * @param pe
      *            The container for the new graphical element.
      */
-    private void getSetRelationGraphic(Group group, PictogramElement pe) {
+    private void createSetRelationGraphic(Group group, PictogramElement pe) {
         // Create the graphic representation of relation.
         // get all connections belong to group
         List<Connection> connections = BOUtil.getAllPictogramElementsForBusinessObject(group, Connection.class,
@@ -210,9 +210,8 @@ public class UpdateRelationshipFeature extends AbstractUpdateFeature {
      *            The Group the set relation associated to.
      * @param ga
      *            The container for the new graphical element.
-     * @return The new graphical element.
      */
-    private Ellipse getSingleRelationGraphic(Group group, GraphicsAlgorithmContainer ga) {
+    private void createSingleRelationGraphic(Group group, GraphicsAlgorithmContainer ga) {
         // create circle
         Ellipse relationGA = Graphiti.getGaService().createEllipse(ga);
         relationGA.setHeight(15);
@@ -224,8 +223,6 @@ public class UpdateRelationshipFeature extends AbstractUpdateFeature {
             relationGA.setBackground(manageColor(ColorConstant.BLACK));
         }
         relationGA.setLineWidth(2);
-
-        return relationGA;
     }
 
     /**

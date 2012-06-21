@@ -12,7 +12,6 @@ import org.eclipse.graphiti.mm.pictograms.Connection;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.ui.features.DefaultDeleteFeature;
 
-
 /**
  * Feature handle deleting of a Feature model object. All child Features and Groups are deleted
  * before a Feature object is deleted.

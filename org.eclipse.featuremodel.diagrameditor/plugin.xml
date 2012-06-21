@@ -47,6 +47,7 @@
             extensions="featurediagram"
             icon="icons/featuremodel.png"
             id="org.eclipse.featuremodel.diagrameditor.diagrameditor"
+            matchingStrategy="org.eclipse.graphiti.ui.editor.DiagramEditorMatchingStrategy"
             name="Feature Diagram">
       </editor>
    </extension>

@@ -1,7 +1,10 @@
 package org.eclipse.featuremodel.diagrameditor.diagram;
 
+import org.eclipse.featuremodel.Feature;
+import org.eclipse.featuremodel.diagrameditor.features.DirectEditDoubleClickFeature;
 import org.eclipse.graphiti.dt.IDiagramTypeProvider;
 import org.eclipse.graphiti.features.context.ICustomContext;
+import org.eclipse.graphiti.features.context.IDoubleClickContext;
 import org.eclipse.graphiti.features.custom.ICustomFeature;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.tb.ContextMenuEntry;
@@ -56,6 +59,25 @@ public class FMEToolBehaviourProvider extends DefaultToolBehaviorProvider {
         }
 
         return new IContextMenuEntry[] { subMenu };
+    }
+
+    /**
+     * Returns a feature which will be executed at at double click. For that purpose a custom
+     * feature is used, because custom features appear in the context menu and the double click
+     * feature should also appear in the context menu (usual UI guideline).
+     * 
+     * @param context
+     *            contains information where the double click gesture has happened
+     * @return the feature to execute
+     */
+    @Override
+    public ICustomFeature getDoubleClickFeature(IDoubleClickContext context) {
+        Object bo = getFeatureProvider().getBusinessObjectForPictogramElement(context.getInnerPictogramElement());
+        if (bo instanceof Feature) {
+            return new DirectEditDoubleClickFeature(getFeatureProvider());
+        }
+
+        return super.getDoubleClickFeature(context);
     }
 
     /**

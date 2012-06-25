@@ -87,12 +87,6 @@ public class FMEFeatureProvider extends DefaultFeatureProvider {
      */
     @Override
     public IAddFeature getAddFeature(IAddContext context) {
-
-        // if (context.getNewObject() instanceof IFile) {
-        // // Drag&drop of file from project explorer
-        // context = adaptAddFeatureModelContext(context);
-        // }
-
         if (context.getNewObject() instanceof FeatureModel) {
             return new AddFeatureModelFeature(this);
         } else if (context.getNewObject() instanceof Feature) {
@@ -100,7 +94,6 @@ public class FMEFeatureProvider extends DefaultFeatureProvider {
         } else if (context.getNewObject() instanceof Group) {
             return new AddGroupFeature(this);
         }
-
         return super.getAddFeature(context);
     }
 
@@ -154,14 +147,14 @@ public class FMEFeatureProvider extends DefaultFeatureProvider {
     @Override
     public IUpdateFeature getUpdateFeature(IUpdateContext context) {
         PictogramElement pictogramElement = context.getPictogramElement();
-        // if (pictogramElement instanceof ContainerShape) {
+
         Object obj = getBusinessObjectForPictogramElement(pictogramElement);
         if (obj instanceof Feature) {
             return new UpdateFeatureFeature(this);
         } else if (obj instanceof Group) {
             return new UpdateRelationshipFeature(this);
         }
-        // }
+
         return super.getUpdateFeature(context);
     }
 
@@ -183,15 +176,6 @@ public class FMEFeatureProvider extends DefaultFeatureProvider {
         return super.getDeleteFeature(context);
     }
 
-    // @Override
-    // public IMoveBendpointFeature getMoveBendpointFeature(IMoveBendpointContext context) {
-    // Object obj = getBusinessObjectForPictogramElement(context.getConnection());
-    // if (obj instanceof Group) {
-    // return new MoveBendPointFeature(this);
-    // }
-    //
-    // return super.getMoveBendpointFeature(context);
-    // }
     /**
      * Gets custom features. Custom features can do anything (e.g. changing Group relation type).
      * 
@@ -281,64 +265,4 @@ public class FMEFeatureProvider extends DefaultFeatureProvider {
 
         return super.getRemoveFeature(context);
     }
-
-    // /**
-    // * Allows to drag & drop of Feature Model file from project explorer.
-    // *
-    // * @param context
-    // * The context
-    // *
-    // * @return The context
-    // */
-    // private IAddContext adaptAddFeatureModelContext(IAddContext context) {
-    // Object newObject = context.getNewObject();
-    // if (newObject instanceof IFile) {
-    // IFile file = (IFile) newObject;
-    // if ("featuremodel".equals(file.getFileExtension())) {
-    // ContainerShape targetContainer = context.getTargetContainer();
-    // if (targetContainer instanceof Diagram) {
-    // Diagram diagram = (Diagram) targetContainer;
-    // ResourceSet resourceSet = diagram.eResource().getResourceSet();
-    // TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(resourceSet);
-    // if (editingDomain == null) {
-    // editingDomain = TransactionalEditingDomain.Factory.INSTANCE.createEditingDomain(resourceSet);
-    // }
-    //
-    // URI uri = this.getFileURI(file, resourceSet);
-    // Resource resource = resourceSet.getResource(uri, true);
-    // if (resource != null && !resource.getContents().isEmpty()) {
-    // Object eObject = resource.getContents().get(0);
-    // if (eObject != null && eObject instanceof FeatureModel) {
-    // FeatureModel featureModel = (FeatureModel) eObject;
-    // AddContext addContext = (AddContext) context;
-    // addContext.setNewObject(featureModel);
-    // return addContext;
-    // }
-    // }
-    //
-    // }
-    // }
-    // }
-    // return context;
-    // }
-
-    // /**
-    // * Retrieves the workspace-local string location of the given IFile, constructs a potentially
-    // * normalized platform resource URI from it and returns it.
-    // *
-    // * @param file
-    // * The file to construct the URI for.
-    // * @param resourceSet
-    // * The ResourceSet to use for the normalization (can be null, in this case no
-    // * normalization is done).
-    // * @return The platform resource URI for the given file.
-    // */
-    // private URI getFileURI(IFile file, ResourceSet resourceSet) {
-    // String pathName = file.getFullPath().toString();
-    // URI resourceURI = URI.createPlatformResourceURI(pathName, true);
-    // if (resourceSet != null) {
-    // resourceURI = resourceSet.getURIConverter().normalize(resourceURI);
-    // }
-    // return resourceURI;
-    // }
 }

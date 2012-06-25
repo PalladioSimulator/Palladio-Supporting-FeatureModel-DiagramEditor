@@ -15,10 +15,10 @@ import org.eclipse.graphiti.mm.GraphicsAlgorithmContainer;
 import org.eclipse.graphiti.mm.Property;
 import org.eclipse.graphiti.mm.algorithms.Ellipse;
 import org.eclipse.graphiti.mm.algorithms.Polygon;
-import org.eclipse.graphiti.mm.algorithms.Polyline;
 import org.eclipse.graphiti.mm.algorithms.styles.Point;
 import org.eclipse.graphiti.mm.pictograms.Connection;
 import org.eclipse.graphiti.mm.pictograms.ConnectionDecorator;
+import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.services.Graphiti;
@@ -105,7 +105,8 @@ public class UpdateRelationshipFeature extends AbstractUpdateFeature {
      */
     private void updateSetRelation(Group group) {
         // get pictogram element represents set relation
-        Shape relationPE = BOUtil.getPictogramElementForBusinessObject(group, Shape.class, getFeatureProvider());
+        ContainerShape relationPE = BOUtil.getPictogramElementForBusinessObject(group, ContainerShape.class,
+                getFeatureProvider());
         // create if pictogram element not exists
         if (relationPE == null) {
             relationPE = Graphiti.getPeService().createContainerShape(getDiagram(), true);
@@ -153,7 +154,7 @@ public class UpdateRelationshipFeature extends AbstractUpdateFeature {
      * @param pe
      *            The container for the new graphical element.
      */
-    private void createSetRelationGraphic(Group group, PictogramElement pe) {
+    private void createSetRelationGraphic(Group group, ContainerShape pe) {
         // Create the graphic representation of relation.
         // get all connections belong to group
         List<Connection> connections = BOUtil.getAllPictogramElementsForBusinessObject(group, Connection.class,
@@ -171,35 +172,46 @@ public class UpdateRelationshipFeature extends AbstractUpdateFeature {
         int y1 = p1.getY();
         int x2 = p2.getX();
         int y2 = p2.getY();
-        
+
         // if both points are on the same horizontal or vertical line as the
         // source point, add or subtract some pixels to ensure a curve is visible
         int xCurveMiddle = x1 + ((x2 - x1) / 2);
-        int yCurveMiddle = y2 + ((y1 - y2) / 2);        
+        int yCurveMiddle = y2 + ((y1 - y2) / 2);
         if (xCurveMiddle != x0) {
             xCurveMiddle -= (x0 - xCurveMiddle) / 2;
         }
         if (yCurveMiddle != y0) {
             yCurveMiddle -= (y0 - yCurveMiddle) / 2;
         }
-        
+
         // define the degree rounding of the curve
         int curveSmoothing = (int) (POLIGON_SIZE);
-        
+
         // draw a filled polygon or a line only depending on the group type
         if (RelationType.XOR.equals(BOUtil.getRelationType(group))) {
-            int[] points = new int[] { x1, y1, xCurveMiddle , yCurveMiddle, x2, y2 };
-            int[] beforeAfter = new int[]{0, 0, curveSmoothing, curveSmoothing, 0, 0};
-            Polyline relationBorder = Graphiti.getGaService().createPolyline(pe, points, beforeAfter);
-            relationBorder.setForeground(manageColor(ColorConstant.BLACK));
-            relationBorder.setLineWidth(2);
-            relationBorder.setLineVisible(true);
-        } else {
-            int[] points = new int[] { x0, y0, x1, y1, xCurveMiddle , yCurveMiddle, x2, y2 };
-            int[] beforeAfter = new int[]{0, 0, 0, 0, curveSmoothing, curveSmoothing, 0, 0};
+            // int[] points = new int[] { x1, y1, xCurveMiddle, yCurveMiddle, x2, y2 };
+            // int[] beforeAfter = new int[] { 0, 0, curveSmoothing, curveSmoothing, 0, 0 };
+            // Polyline relationBorder = Graphiti.getGaService().createPolyline(pe, points,
+            // beforeAfter);
+            // relationBorder.setForeground(manageColor(ColorConstant.BLACK));
+            // relationBorder.setLineWidth(2);
+            // relationBorder.setLineVisible(true);
+
+            int[] points = new int[] { x0, y0, x1, y1, xCurveMiddle, yCurveMiddle, x2, y2 };
+            int[] beforeAfter = new int[] { 0, 0, 0, 0, curveSmoothing, curveSmoothing, 0, 0 };
             Polygon relationGA = Graphiti.getGaService().createPolygon(pe, points, beforeAfter);
-            relationGA.setLineVisible(false);
+            relationGA.setLineWidth(2);
+            relationGA.setBackground(manageColor(ColorConstant.WHITE));
+            // set border color
+            relationGA.setForeground(manageColor(ColorConstant.BLACK));
+        } else {
+            int[] points = new int[] { x0, y0, x1, y1, xCurveMiddle, yCurveMiddle, x2, y2 };
+            int[] beforeAfter = new int[] { 0, 0, 0, 0, curveSmoothing, curveSmoothing, 0, 0 };
+            Polygon relationGA = Graphiti.getGaService().createPolygon(pe, points, beforeAfter);
+            relationGA.setLineWidth(2);
             relationGA.setBackground(manageColor(ColorConstant.BLACK));
+            // set border color
+            relationGA.setForeground(manageColor(ColorConstant.BLACK));
         }
     }
 
@@ -253,7 +265,8 @@ public class UpdateRelationshipFeature extends AbstractUpdateFeature {
      */
     private void deleteSetRelation(Group group) {
         // get pictogram element represents set relation
-        Shape relationPE = BOUtil.getPictogramElementForBusinessObject(group, Shape.class, getFeatureProvider());
+        ContainerShape relationPE = BOUtil.getPictogramElementForBusinessObject(group, ContainerShape.class,
+                getFeatureProvider());
         if (relationPE != null) {
             Graphiti.getPeService().deletePictogramElement(relationPE);
         }

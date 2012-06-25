@@ -28,7 +28,6 @@ import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.ui.services.GraphitiUi;
 import org.eclipse.ui.statushandlers.StatusManager;
 
-
 /**
  * Diagram editor help methods. It contains functions to handle resources e.g. to create Feature
  * Model files/models or Feature Diagram files/models or save Feature Model objects to the file.
@@ -51,19 +50,25 @@ public class FMEDiagramEditorUtil {
      *            the Feature Diagram model
      */
     public static void saveToModelFile(final EObject bo, final Diagram diagram) {
-        URI uri = diagram.eResource().getURI();
-        uri = uri.trimFragment();
-        uri = uri.trimFileExtension();
-        uri = uri.appendFileExtension(FMEDiagramEditor.MODEL_FILE_EXTENSION);
-        ResourceSet rSet = diagram.eResource().getResourceSet();
+        Object diagramBO = Graphiti.getLinkService().getBusinessObjectForLinkedPictogramElement(diagram);
+        // save to the existing Feature Model file or create a new
+        if (diagramBO instanceof FeatureModel && ((FeatureModel) diagramBO).eResource() != null) {
+            ((FeatureModel) diagramBO).eResource().getContents().add(bo);
+        } else {
+            URI uri = diagram.eResource().getURI();
+            uri = uri.trimFragment();
+            uri = uri.trimFileExtension();
+            uri = uri.appendFileExtension(FMEDiagramEditor.MODEL_FILE_EXTENSION);
 
-        IResource file = FMEDiagramEditorUtil.getResource(uri.toPlatformString(true));
-        if (file == null || !file.exists()) {
-            createFeatureModel(diagram, uri);
+            IResource file = FMEDiagramEditorUtil.getResource(uri.toPlatformString(true));
+            if (file == null || !file.exists()) {
+                createFeatureModel(diagram, uri);
+            }
+
+            ResourceSet rSet = diagram.eResource().getResourceSet();
+            final Resource resource = rSet.getResource(uri, true);
+            resource.getContents().add(bo);
         }
-
-        final Resource resource = rSet.getResource(uri, true);
-        resource.getContents().add(bo);
     }
 
     /**
@@ -268,11 +273,11 @@ public class FMEDiagramEditorUtil {
         editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain) {
             @Override
             protected void doExecute() {
-                IFeatureProvider dtp = GraphitiUi.getExtensionManager().createFeatureProvider(featureDiagramModel);
+                IFeatureProvider fp = GraphitiUi.getExtensionManager().createFeatureProvider(featureDiagramModel);
                 AddContext addContext = new AddContext();
                 addContext.setNewObject(featureModelModel);
                 addContext.setTargetContainer(featureDiagramModel);
-                dtp.addIfPossible(addContext);
+                fp.addIfPossible(addContext);
             }
         });
     }

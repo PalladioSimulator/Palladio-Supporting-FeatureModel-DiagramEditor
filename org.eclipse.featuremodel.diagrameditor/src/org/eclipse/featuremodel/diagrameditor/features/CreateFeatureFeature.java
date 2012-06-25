@@ -140,7 +140,6 @@ public class CreateFeatureFeature extends AbstractCreateFeature {
             // Create a new Group model object.
             Group group = FeatureModelFactory.eINSTANCE.createGroup();
             group.setId(IdGen.generate());
-            // context.getTargetContainer().eResource().getContents().add(group);
             FMEDiagramEditorUtil.saveToModelFile(group, getDiagram());
             // Add the new Group to the children of parent Feature
             parentFeature.getChildren().add(group);
@@ -148,7 +147,7 @@ public class CreateFeatureFeature extends AbstractCreateFeature {
             group.getFeatures().add(newFeature);
 
             // Add a graphical representation of Group model object.
-            addGroup(group, newFeature, parentFeature);
+            drawGroup(group, newFeature, parentFeature);
         } else if (parent instanceof Group) { // Add to the the existing Group.
             Group group = (Group) parent;
 
@@ -166,7 +165,7 @@ public class CreateFeatureFeature extends AbstractCreateFeature {
             // Get the parent Feature
             Feature parentFeature = group.getFeatures().get(0).getParent();
             // Add a graphical representation of Group model object.
-            addGroup(group, newFeature, parentFeature);
+            drawGroup(group, newFeature, parentFeature);
         }
     }
 
@@ -180,7 +179,7 @@ public class CreateFeatureFeature extends AbstractCreateFeature {
      * @param parentFeature
      *            The parent Feature;
      */
-    private void addGroup(Group group, Feature newFeature, Feature parentFeature) {
+    private void drawGroup(Group group, Feature newFeature, Feature parentFeature) {
         ContainerShape parentFeatureCS = BOUtil.getPictogramElementForBusinessObject(parentFeature,
                 ContainerShape.class, getFeatureProvider());
         ContainerShape newFeatureCS = BOUtil.getPictogramElementForBusinessObject(newFeature, ContainerShape.class,

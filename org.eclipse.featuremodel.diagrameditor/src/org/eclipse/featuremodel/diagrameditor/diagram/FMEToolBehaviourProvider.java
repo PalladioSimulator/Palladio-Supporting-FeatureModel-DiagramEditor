@@ -6,7 +6,6 @@ import org.eclipse.graphiti.dt.IDiagramTypeProvider;
 import org.eclipse.graphiti.features.context.ICustomContext;
 import org.eclipse.graphiti.features.context.IDoubleClickContext;
 import org.eclipse.graphiti.features.custom.ICustomFeature;
-import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.tb.ContextMenuEntry;
 import org.eclipse.graphiti.tb.DefaultToolBehaviorProvider;
 import org.eclipse.graphiti.tb.IContextMenuEntry;
@@ -90,50 +89,5 @@ public class FMEToolBehaviourProvider extends DefaultToolBehaviorProvider {
     public boolean isConnectionSelectionEnabled() {
         return true;
     }
-
-    /**
-     * Changes the default selection on mouse click. The selection of Group pictogram elements (e.g
-     * relationship figure) is disabled.
-     * 
-     * @param originalPe
-     *            The currently selected pictogram element.
-     * @param oldSelection
-     *            The pictogram elements selected befor.
-     * 
-     * @return return null if there should not be a special selection behavior; return the diagram
-     *         if there is a Group pictogram element is selected.
-     */
-    @Override
-    public PictogramElement getSelection(PictogramElement originalPe, PictogramElement[] oldSelection) {
-        // Object bo = this.getFeatureProvider().getBusinessObjectForPictogramElement(originalPe);
-        // if (bo instanceof Group) {
-        // return this.getDiagramTypeProvider().getDiagram();
-        // }
-        return super.getSelection(originalPe, oldSelection);
-    }
-
-    /**
-     * Indicates if the selection tool entry is shown in the palette. This implementation returns
-     * <code>false</code> and tells the framework to do not show the selection tool entry in the
-     * palette.
-     * 
-     * @return <code>false</code>
-     */
-    // @Override
-    // public boolean isShowSelectionTool() {
-    // return false;
-    // }
-
-    /**
-     * Indicates if the marquee tool entry is shown in the palette. This implementation returns
-     * <code>false</code> and tells the framework to do not show the marquee tool entry in the
-     * palette.
-     * 
-     * @return <code>false</code>
-     */
-    // @Override
-    // public boolean isShowMarqueeTool() {
-    // return false;
-    // }
 
 }

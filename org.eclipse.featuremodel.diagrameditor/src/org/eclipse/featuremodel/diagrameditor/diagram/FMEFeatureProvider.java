@@ -17,7 +17,7 @@ import org.eclipse.featuremodel.diagrameditor.features.LayoutDiagramFeature;
 import org.eclipse.featuremodel.diagrameditor.features.LayoutFeatureFeature;
 import org.eclipse.featuremodel.diagrameditor.features.MoveFeatureFeature;
 import org.eclipse.featuremodel.diagrameditor.features.RemovFeatureFeature;
-import org.eclipse.featuremodel.diagrameditor.features.ResizeSetRelationFeature;
+import org.eclipse.featuremodel.diagrameditor.features.ResizeFeatureFeature;
 import org.eclipse.featuremodel.diagrameditor.features.SetMandatoryRelationTypeFeature;
 import org.eclipse.featuremodel.diagrameditor.features.SetORRelationTypeFeature;
 import org.eclipse.featuremodel.diagrameditor.features.SetOptionalRelationTypeFeature;
@@ -133,7 +133,7 @@ public class FMEFeatureProvider extends DefaultFeatureProvider {
         if (obj instanceof Feature) {
             return new DirectEditFeatureFeature(this);
         }
-        return super.getDirectEditingFeature(context);
+        return null;
     }
 
     /**
@@ -155,7 +155,7 @@ public class FMEFeatureProvider extends DefaultFeatureProvider {
             return new UpdateRelationshipFeature(this);
         }
 
-        return super.getUpdateFeature(context);
+        return null;
     }
 
     /**
@@ -213,8 +213,7 @@ public class FMEFeatureProvider extends DefaultFeatureProvider {
             return new MoveFeatureFeature(this);
         }
 
-        // All other cases
-        return super.getMoveShapeFeature(context);
+        return null;
     }
 
     /**
@@ -229,11 +228,11 @@ public class FMEFeatureProvider extends DefaultFeatureProvider {
     public IResizeShapeFeature getResizeShapeFeature(IResizeShapeContext context) {
         Object bo = getBusinessObjectForPictogramElement(context.getShape());
 
-        if (bo instanceof Group) {
-            return new ResizeSetRelationFeature(this);
+        if (bo instanceof Feature) {
+            return new ResizeFeatureFeature(this);
         }
 
-        return super.getResizeShapeFeature(context);
+        return null;
     }
 
     /**

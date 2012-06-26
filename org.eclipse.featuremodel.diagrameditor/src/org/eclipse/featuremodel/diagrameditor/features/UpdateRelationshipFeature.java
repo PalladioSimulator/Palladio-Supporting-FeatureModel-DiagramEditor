@@ -15,6 +15,7 @@ import org.eclipse.graphiti.mm.GraphicsAlgorithmContainer;
 import org.eclipse.graphiti.mm.Property;
 import org.eclipse.graphiti.mm.algorithms.Ellipse;
 import org.eclipse.graphiti.mm.algorithms.Polygon;
+import org.eclipse.graphiti.mm.algorithms.Polyline;
 import org.eclipse.graphiti.mm.algorithms.styles.Point;
 import org.eclipse.graphiti.mm.pictograms.Connection;
 import org.eclipse.graphiti.mm.pictograms.ConnectionDecorator;
@@ -189,29 +190,18 @@ public class UpdateRelationshipFeature extends AbstractUpdateFeature {
 
         // draw a filled polygon or a line only depending on the group type
         if (RelationType.XOR.equals(BOUtil.getRelationType(group))) {
-            // int[] points = new int[] { x1, y1, xCurveMiddle, yCurveMiddle, x2, y2 };
-            // int[] beforeAfter = new int[] { 0, 0, curveSmoothing, curveSmoothing, 0, 0 };
-            // Polyline relationBorder = Graphiti.getGaService().createPolyline(pe, points,
-            // beforeAfter);
-            // relationBorder.setForeground(manageColor(ColorConstant.BLACK));
-            // relationBorder.setLineWidth(2);
-            // relationBorder.setLineVisible(true);
-
-            int[] points = new int[] { x0, y0, x1, y1, xCurveMiddle, yCurveMiddle, x2, y2 };
-            int[] beforeAfter = new int[] { 0, 0, 0, 0, curveSmoothing, curveSmoothing, 0, 0 };
-            Polygon relationGA = Graphiti.getGaService().createPolygon(pe, points, beforeAfter);
-            relationGA.setLineWidth(2);
-            relationGA.setBackground(manageColor(ColorConstant.WHITE));
-            // set border color
-            relationGA.setForeground(manageColor(ColorConstant.BLACK));
+            int[] points = new int[] { x1, y1, xCurveMiddle, yCurveMiddle, x2, y2 };
+            int[] beforeAfter = new int[] { 0, 0, curveSmoothing, curveSmoothing, 0, 0 };
+            Polyline relationBorder = Graphiti.getGaService().createPolyline(pe, points, beforeAfter);
+            relationBorder.setForeground(manageColor(ColorConstant.BLACK));
+            relationBorder.setLineWidth(2);
+            relationBorder.setLineVisible(true);
         } else {
             int[] points = new int[] { x0, y0, x1, y1, xCurveMiddle, yCurveMiddle, x2, y2 };
             int[] beforeAfter = new int[] { 0, 0, 0, 0, curveSmoothing, curveSmoothing, 0, 0 };
             Polygon relationGA = Graphiti.getGaService().createPolygon(pe, points, beforeAfter);
-            relationGA.setLineWidth(2);
+            relationGA.setLineVisible(false);
             relationGA.setBackground(manageColor(ColorConstant.BLACK));
-            // set border color
-            relationGA.setForeground(manageColor(ColorConstant.BLACK));
         }
     }
 

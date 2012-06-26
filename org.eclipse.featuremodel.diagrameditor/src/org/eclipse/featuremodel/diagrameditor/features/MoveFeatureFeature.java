@@ -18,9 +18,6 @@ import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.services.Graphiti;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PlatformUI;
 
 /**
  * Feature handle moving of the pictogram element represents Feature.
@@ -63,8 +60,10 @@ public class MoveFeatureFeature extends DefaultMoveShapeFeature {
                 target = this.getFeatureProvider().getBusinessObjectForPictogramElement(targetContainer);
             }
 
-            // allow if the target is a Group and not a child of the Feature to move
-            if (target instanceof Group && !isTargetGroupChild(featureToMove, (Group) target)) {
+            // allow if the target is not the parent Group and not a child of the Feature to move
+            if (target instanceof Group //
+                    && !featureToMove.getParentGroup().equals(target) //
+                    && !isTargetGroupChild(featureToMove, (Group) target)) {
                 return true;
             } else if (target instanceof Feature && !isTargetFeatureChild(featureToMove, (Feature) target)) {
                 // allow if the target is a Feature and not a child of the Feature to move
@@ -143,11 +142,6 @@ public class MoveFeatureFeature extends DefaultMoveShapeFeature {
         }
 
         if (newParent instanceof Feature || newParent instanceof Group) {
-            // confirm the moving
-            if (!openConfirmDialog()) {
-                return;
-            }
-
             Feature featureToMove = (Feature) this.getFeatureProvider().getBusinessObjectForPictogramElement(
                     context.getShape());
 
@@ -185,16 +179,6 @@ public class MoveFeatureFeature extends DefaultMoveShapeFeature {
         } else {
             super.internalMove(context);
         }
-    }
-
-    /**
-     * Open a confirm (OK/Cancel) dialog to confirm the moving.
-     * 
-     * @return if the user presses the OK button, false otherwise
-     */
-    protected boolean openConfirmDialog() {
-        Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-        return MessageDialog.openConfirm(shell, "Confirm Move", "This Feature and all child Features will be moved");
     }
 
     /**

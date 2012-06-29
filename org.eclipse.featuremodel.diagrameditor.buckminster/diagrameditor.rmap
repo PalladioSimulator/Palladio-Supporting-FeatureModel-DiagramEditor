@@ -4,9 +4,10 @@
   <rm:locator searchPathRef="localresources" failOnError="false"/>
   <rm:locator searchPathRef="diagrameditor" failOnError="false"/>
   <rm:locator searchPathRef="graphiti" failOnError="false" pattern="^org\.eclipse\.graphiti.*" />
-  <rm:locator searchPathRef="featuremodelsvn" failOnError="false" />
+  <rm:locator searchPathRef="featuremodelsvn" failOnError="true" />
+  <!--
   <rm:locator searchPathRef="featuremodel" failOnError="false" />
-  
+  -->
   
   <rm:searchPath name="diagrameditor">
     <rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="svn" source="true">

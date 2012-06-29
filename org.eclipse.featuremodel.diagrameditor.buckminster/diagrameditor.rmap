@@ -27,7 +27,7 @@
       <rm:uri format="http://dev.eclipse.org/svnroot/modeling/org.eclipse.emft.featuremodel/trunk/{0}">
       	<bc:replace>
        		<bc:propertyRef key="buckminster.component" />
-       		<bc:match pattern="^org\.eclipse\.featuremodel\.metamodel\.edit"
+       		<bc:match pattern="^org\.eclipse\.featuremodel\.edit"
                  replacement="org.eclipse.featuremodel.metamodel.edit" />
      	</bc:replace>
       </rm:uri>
@@ -46,7 +46,7 @@
         <bc:propertyRef key="workspace.root"/>
       	<bc:replace>
        		<bc:propertyRef key="buckminster.component" />
-       		<bc:match pattern="^org\.eclipse\.featuremodel\.metamodel\.edit"
+       		<bc:match pattern="^org\.eclipse\.featuremodel\.edit"
                  replacement="org.eclipse.featuremodel.metamodel.edit" />
      	</bc:replace>
       </rm:uri>

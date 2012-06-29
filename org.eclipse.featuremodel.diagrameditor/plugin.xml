@@ -48,7 +48,7 @@
             icon="icons/featuremodel.png"
             id="org.eclipse.featuremodel.diagrameditor.diagrameditor"
             matchingStrategy="org.eclipse.graphiti.ui.editor.DiagramEditorMatchingStrategy"
-            name="Feature Diagram">
+            name="Feature Diagram Editor">
       </editor>
    </extension>
    <extension point="org.eclipse.ui.popupMenus">
@@ -66,4 +66,5 @@
          </action>
       </objectContribution>
    </extension>
+   
 </plugin>

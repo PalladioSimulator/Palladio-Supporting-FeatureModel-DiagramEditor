@@ -17,7 +17,6 @@
    </license>
 
    <url>
-      <discovery label="EMF Feature Model" url="http://download.eclipse.org/modeling/emft/featuremodel/update-site/"/>
       <discovery label="Graphiti" url="http://download.eclipse.org/graphiti/updates/nightly/"/>
    </url>
 
@@ -28,6 +27,7 @@
 
    <includes
          id="org.eclipse.featuremodel.feature"
-         version="0.0.0"/>
+         version="0.0.0"
+         name=""/>
 
 </feature>

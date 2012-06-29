@@ -119,15 +119,6 @@ public class CreateFeatureFeature extends AbstractCreateFeature {
             updatePictogramElement(connection);
         }
 
-        // If the parent container is the model itself
-        // set feature as root.
-        if (parent instanceof FeatureModel) {
-            FeatureModel featureModel = (FeatureModel) parent;
-            if (featureModel.getRoot() == null) {
-                ((FeatureModel) parent).setRoot(newFeature);
-            }
-        }
-
         return new Object[] { newFeature };
     }
 

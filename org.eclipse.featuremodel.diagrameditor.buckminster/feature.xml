@@ -26,4 +26,8 @@
          version="0.0.0"
          name=""/>
 
+   <includes
+         id="org.eclipse.featuremodel.feature"
+         version="0.0.0"/>
+
 </feature>

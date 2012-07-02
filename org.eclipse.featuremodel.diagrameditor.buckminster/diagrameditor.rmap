@@ -5,9 +5,6 @@
   <rm:locator searchPathRef="diagrameditor" failOnError="false"/>
   <rm:locator searchPathRef="graphiti" failOnError="false" pattern="^org\.eclipse\.graphiti.*" />
   <rm:locator searchPathRef="featuremodelsvn" failOnError="true" />
-  <!--
-  <rm:locator searchPathRef="featuremodel" failOnError="false" />
-  -->
   
   <rm:searchPath name="diagrameditor">
     <rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="svn" source="true">
@@ -32,13 +29,6 @@
                  replacement="org.eclipse.featuremodel.metamodel.edit" />
      	</bc:replace>
       </rm:uri>
-    </rm:provider>
-  </rm:searchPath>
-  <rm:searchPath name="featuremodel">
-    <rm:provider componentTypes="osgi.bundle,eclipse.feature,buckminster" readerType="p2" source="false" mutable="false">
-      <rm:property key="buckminster.source" value="false"/>
-      <rm:property key="buckminster.mutable" value="false"/>
-      <rm:uri format="http://download.eclipse.org/modeling/emft/featuremodel/update-site/"/>
     </rm:provider>
   </rm:searchPath>
   <rm:searchPath name="localresources">

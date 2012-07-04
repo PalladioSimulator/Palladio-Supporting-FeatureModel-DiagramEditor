@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.featuremodel.diagrameditor.feature"
       label="Feature Diagram Editor"
-      version="0.1.0.qualifier">
+      version="0.1.1.qualifier">
 
    <description url="http://www.eclipse.org/modeling/emft/featuremodel/">
       A graphical feature diagram editor according to the established

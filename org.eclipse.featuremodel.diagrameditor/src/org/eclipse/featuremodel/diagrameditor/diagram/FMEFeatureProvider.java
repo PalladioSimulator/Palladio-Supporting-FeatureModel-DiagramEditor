@@ -9,9 +9,11 @@ import org.eclipse.featuremodel.Group;
 import org.eclipse.featuremodel.diagrameditor.features.AddFeatureFeature;
 import org.eclipse.featuremodel.diagrameditor.features.AddFeatureModelFeature;
 import org.eclipse.featuremodel.diagrameditor.features.AddGroupFeature;
+import org.eclipse.featuremodel.diagrameditor.features.CollapseFeatureFeature;
 import org.eclipse.featuremodel.diagrameditor.features.CreateFeatureFeature;
 import org.eclipse.featuremodel.diagrameditor.features.DeleteFeatureFeature;
 import org.eclipse.featuremodel.diagrameditor.features.DirectEditFeatureFeature;
+import org.eclipse.featuremodel.diagrameditor.features.ExpandFeatureFeature;
 import org.eclipse.featuremodel.diagrameditor.features.LayoutDiagramActionFeature;
 import org.eclipse.featuremodel.diagrameditor.features.LayoutDiagramFeature;
 import org.eclipse.featuremodel.diagrameditor.features.LayoutFeatureFeature;
@@ -173,7 +175,7 @@ public class FMEFeatureProvider extends DefaultFeatureProvider {
             return new DeleteFeatureFeature(this);
         }
 
-        return super.getDeleteFeature(context);
+        return null;
     }
 
     /**
@@ -186,13 +188,19 @@ public class FMEFeatureProvider extends DefaultFeatureProvider {
     @Override
     public ICustomFeature[] getCustomFeatures(ICustomContext context) {
         List<ICustomFeature> result = new ArrayList<ICustomFeature>();
+        // context menu to layout the diagram
+        result.add(new LayoutDiagramActionFeature(this));
 
+        // context menus to set/change Group relation
         result.add(new SetOptionalRelationTypeFeature(this));
         result.add(new SetMandatoryRelationTypeFeature(this));
         result.add(new SetORRelationTypeFeature(this));
         result.add(new SetXORRelationTypeFeature(this));
 
-        result.add(new LayoutDiagramActionFeature(this));
+        // context menu to collapse/expand Feature children
+        result.add(new CollapseFeatureFeature(this));
+        result.add(new ExpandFeatureFeature(this));
+
         return result.toArray(new ICustomFeature[result.size()]);
     }
 
@@ -262,6 +270,6 @@ public class FMEFeatureProvider extends DefaultFeatureProvider {
             return new RemovFeatureFeature(this);
         }
 
-        return super.getRemoveFeature(context);
+        return null;
     }
 }

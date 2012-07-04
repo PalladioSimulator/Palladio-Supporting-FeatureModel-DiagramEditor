@@ -5,6 +5,7 @@ import java.util.List;
 import org.eclipse.featuremodel.Group;
 import org.eclipse.featuremodel.diagrameditor.utilities.BOUtil;
 import org.eclipse.featuremodel.diagrameditor.utilities.BOUtil.RelationType;
+import org.eclipse.featuremodel.diagrameditor.utilities.Properties;
 import org.eclipse.graphiti.datatypes.ILocation;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.IReason;
@@ -137,7 +138,8 @@ public class UpdateRelationshipFeature extends AbstractUpdateFeature {
         if (cd == null) {
             // create pictogram element
             cd = Graphiti.getPeService().createConnectionDecorator(connection, false, 1.0, true);
-            Graphiti.getPeService().setPropertyValue(cd, "type", "relation");
+            Graphiti.getPeService().setPropertyValue(cd, Properties.PROP_KEY_RELATION_TYPE,
+                    Properties.PROP_VAL_RELATION_TYPE);
 
             // delete set relation if exist
             deleteSetRelation(group);
@@ -238,7 +240,8 @@ public class UpdateRelationshipFeature extends AbstractUpdateFeature {
         ConnectionDecorator result = null;
         for (ConnectionDecorator cd : connection.getConnectionDecorators()) {
             for (Property p : cd.getProperties()) {
-                if ("type".equals(p.getKey()) && "relation".equals(p.getValue())) {
+                if (Properties.PROP_KEY_RELATION_TYPE.equals(p.getKey())
+                        && Properties.PROP_VAL_RELATION_TYPE.equals(p.getValue())) {
                     result = cd;
                     break;
                 }

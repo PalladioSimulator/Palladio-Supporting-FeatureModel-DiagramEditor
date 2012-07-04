@@ -1,11 +1,28 @@
 package org.eclipse.featuremodel.diagrameditor.diagram;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.featuremodel.Feature;
+import org.eclipse.featuremodel.FeatureModel;
+import org.eclipse.featuremodel.Group;
+import org.eclipse.featuremodel.diagrameditor.features.CollapseFeatureFeature;
 import org.eclipse.featuremodel.diagrameditor.features.DirectEditDoubleClickFeature;
+import org.eclipse.featuremodel.diagrameditor.features.ExpandFeatureFeature;
+import org.eclipse.featuremodel.diagrameditor.features.LayoutDiagramActionFeature;
+import org.eclipse.featuremodel.diagrameditor.features.SetMandatoryRelationTypeFeature;
+import org.eclipse.featuremodel.diagrameditor.features.SetORRelationTypeFeature;
+import org.eclipse.featuremodel.diagrameditor.features.SetOptionalRelationTypeFeature;
+import org.eclipse.featuremodel.diagrameditor.features.SetXORRelationTypeFeature;
 import org.eclipse.graphiti.dt.IDiagramTypeProvider;
+import org.eclipse.graphiti.features.ICreateFeature;
 import org.eclipse.graphiti.features.context.ICustomContext;
 import org.eclipse.graphiti.features.context.IDoubleClickContext;
 import org.eclipse.graphiti.features.custom.ICustomFeature;
+import org.eclipse.graphiti.mm.pictograms.PictogramElement;
+import org.eclipse.graphiti.palette.IPaletteCompartmentEntry;
+import org.eclipse.graphiti.palette.impl.ObjectCreationToolEntry;
+import org.eclipse.graphiti.palette.impl.PaletteCompartmentEntry;
 import org.eclipse.graphiti.tb.ContextMenuEntry;
 import org.eclipse.graphiti.tb.DefaultToolBehaviorProvider;
 import org.eclipse.graphiti.tb.IContextMenuEntry;
@@ -40,24 +57,54 @@ public class FMEToolBehaviourProvider extends DefaultToolBehaviorProvider {
      */
     @Override
     public IContextMenuEntry[] getContextMenu(ICustomContext context) {
+        List<IContextMenuEntry> menuList = new ArrayList<IContextMenuEntry>();
 
-        // create a sub-menu
-        ContextMenuEntry subMenu = new ContextMenuEntry(null, context);
-        subMenu.setSubmenu(false);
+        if (context.getPictogramElements() != null) {
+            for (PictogramElement pictogramElement : context.getPictogramElements()) {
+                Object bo = getFeatureProvider().getBusinessObjectForPictogramElement(pictogramElement);
+                if (bo == null) {
+                    continue;
+                } else if (bo instanceof FeatureModel) {
+                    // context menu to layout the diagram
+                    ContextMenuEntry menuEntry = new ContextMenuEntry(new LayoutDiagramActionFeature(
+                            getFeatureProvider()), context);
+                    menuList.add(menuEntry);
+                } else if (bo instanceof Group) {
+                    // context menus to set/change Group relation
+                    ContextMenuEntry subMenu = new ContextMenuEntry(null, context);
+                    subMenu.setSubmenu(false);
+                    menuList.add(subMenu);
+                    // menu to set optional relation
+                    ContextMenuEntry menuEntry = new ContextMenuEntry(new SetOptionalRelationTypeFeature(
+                            getFeatureProvider()), context);
+                    subMenu.add(menuEntry);
+                    // menu to set mandatory relation
+                    menuEntry = new ContextMenuEntry(new SetMandatoryRelationTypeFeature(getFeatureProvider()), context);
+                    subMenu.add(menuEntry);
+                    // menu to set OR relation
+                    menuEntry = new ContextMenuEntry(new SetORRelationTypeFeature(getFeatureProvider()), context);
+                    subMenu.add(menuEntry);
+                    // menu to set XOR relation
+                    menuEntry = new ContextMenuEntry(new SetXORRelationTypeFeature(getFeatureProvider()), context);
+                    subMenu.add(menuEntry);
+                } else if (bo instanceof Feature) {
+                    // context menu to collapse/expand Feature children
+                    ContextMenuEntry subMenu = new ContextMenuEntry(null, context);
+                    subMenu.setSubmenu(false);
+                    menuList.add(subMenu);
+                    // menu to collapse a Feature
+                    ContextMenuEntry menuEntry = new ContextMenuEntry(new CollapseFeatureFeature(getFeatureProvider()),
+                            context);
+                    subMenu.add(menuEntry);
+                    // menu to expand a Feature
+                    menuEntry = new ContextMenuEntry(new ExpandFeatureFeature(getFeatureProvider()), context);
+                    subMenu.add(menuEntry);
+                }
 
-        // gets all custom features for given context
-        ICustomFeature[] customFeatures = getFeatureProvider().getCustomFeatures(context);
-
-        // create a menu-entry in the sub-menu for each available custom feature
-        for (int i = 0; i < customFeatures.length; i++) {
-            ICustomFeature customFeature = customFeatures[i];
-            if (customFeature.isAvailable(context)) {
-                ContextMenuEntry menuEntry = new ContextMenuEntry(customFeature, context);
-                subMenu.add(menuEntry);
             }
         }
 
-        return new IContextMenuEntry[] { subMenu };
+        return menuList.toArray(new IContextMenuEntry[menuList.size()]);
     }
 
     /**
@@ -80,14 +127,29 @@ public class FMEToolBehaviourProvider extends DefaultToolBehaviorProvider {
     }
 
     /**
-     * Indicates if the selection of connections is enabled. This implementation returns
-     * <code>false</code> and tells the framework that the selection of connections is disabled.
+     * Gets the diagram palette with tools to create Feature Diagrams.
      * 
-     * @return <code>false</code>
+     * @return the palette entries
      */
     @Override
-    public boolean isConnectionSelectionEnabled() {
-        return true;
-    }
+    public IPaletteCompartmentEntry[] getPalette() {
+        List<IPaletteCompartmentEntry> compartments = new ArrayList<IPaletteCompartmentEntry>();
 
+        PaletteCompartmentEntry compartmentEntry = new PaletteCompartmentEntry("Objects", null);
+        compartments.add(compartmentEntry);
+
+        // creates tools to create Features
+        ICreateFeature[] createFeatures = getFeatureProvider().getCreateFeatures();
+
+        for (ICreateFeature createFeature : createFeatures) {
+            ObjectCreationToolEntry objectCreationToolEntry = new ObjectCreationToolEntry(
+                    createFeature.getCreateName(), createFeature.getCreateDescription(),
+                    createFeature.getCreateImageId(), createFeature.getCreateLargeImageId(), createFeature);
+
+            compartmentEntry.addToolEntry(objectCreationToolEntry);
+
+        }
+
+        return compartments.toArray(new IPaletteCompartmentEntry[compartments.size()]);
+    }
 }

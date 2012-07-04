@@ -102,7 +102,7 @@ public class BOUtil {
      * @return The input anchor.
      */
     public static Anchor getInputAnchor(ContainerShape cs) {
-        return getBoxRelativeAnchor(cs, "input");
+        return getBoxRelativeAnchor(cs, Properties.PROP_VAL_ANCHOR_TYPE_INPUT);
     }
 
     /**
@@ -113,7 +113,7 @@ public class BOUtil {
      * @return The output anchor.
      */
     public static Anchor getOutputAnchor(ContainerShape cs) {
-        return getBoxRelativeAnchor(cs, "output");
+        return getBoxRelativeAnchor(cs, Properties.PROP_VAL_ANCHOR_TYPE_OUTPUT);
     }
 
     /**
@@ -131,7 +131,7 @@ public class BOUtil {
         for (Anchor a : cs.getAnchors()) {
             if (a instanceof BoxRelativeAnchor) {
                 for (Property p : ((BoxRelativeAnchor) a).getProperties()) {
-                    if ("type".equals(p.getKey()) && type.equals(p.getValue())) {
+                    if (Properties.PROP_KEY_ANCHOR_TYPE.equals(p.getKey()) && type.equals(p.getValue())) {
                         anchor = a;
                         break;
                     }

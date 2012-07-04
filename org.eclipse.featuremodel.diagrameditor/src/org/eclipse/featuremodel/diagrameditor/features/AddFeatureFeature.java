@@ -2,6 +2,7 @@ package org.eclipse.featuremodel.diagrameditor.features;
 
 import org.eclipse.featuremodel.Feature;
 import org.eclipse.featuremodel.Group;
+import org.eclipse.featuremodel.diagrameditor.utilities.Properties;
 import org.eclipse.graphiti.features.IDirectEditingInfo;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.IAddContext;
@@ -29,13 +30,18 @@ import org.eclipse.graphiti.util.ColorConstant;
 public class AddFeatureFeature extends AbstractAddFeature {
 
     /**
-     * High of the rectangle.
+     * High of the Feature figure.
      */
-    private static final int RECTANGLE_HIGH = 40;
+    private static final int FEATURE_FIGURE_HIGH = 40;
     /**
-     * Width of the rectangle.
+     * Width of the Feature figure.
      */
-    private static final int RECTANGLE_WIDTH = 120;
+    private static final int FEATURE_FIGURE_WIDTH = 120;
+
+    /**
+     * Size of the expand sign.
+     */
+    private static final int EXPAND_SIGN_SIZE = 11;
 
     /**
      * Creates an instance of {@link AddFeatureFeature}.
@@ -95,10 +101,14 @@ public class AddFeatureFeature extends AbstractAddFeature {
 
         // Create the visualization of the Feature as a rectangle
         ContainerShape featureContainerShape = peService.createContainerShape(getDiagram(), true);
+        peService.setPropertyValue(featureContainerShape, Properties.PROP_KEY_CONTAINER_TYPE,
+                Properties.PROP_VAL_CONTAINER_TYPE_EXPANDED);
+
         Rectangle featureRectangle = gaService.createRectangle(featureContainerShape);
         featureRectangle.setBackground(manageColor(ColorConstant.WHITE));
         featureRectangle.setFilled(true);
-        gaService.setLocationAndSize(featureRectangle, context.getX(), context.getY(), RECTANGLE_WIDTH, RECTANGLE_HIGH);
+        gaService.setLocationAndSize(featureRectangle, context.getX(), context.getY(), FEATURE_FIGURE_WIDTH,
+                FEATURE_FIGURE_HIGH);
         // Link the visualization with the Feature model
         link(featureContainerShape, feature);
 
@@ -108,7 +118,7 @@ public class AddFeatureFeature extends AbstractAddFeature {
         featureNameText.setForeground(manageColor(ColorConstant.BLACK));
         featureNameText.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER);
         featureNameText.setVerticalAlignment(Orientation.ALIGNMENT_CENTER);
-        gaService.setLocationAndSize(featureNameText, 10, 10, RECTANGLE_WIDTH - 20, 20);
+        gaService.setLocationAndSize(featureNameText, 10, 10, FEATURE_FIGURE_WIDTH - 20, 20);
         // gaService.createFont(featureNameText, "Arial", 16);
         featureNameText.setValue(feature.getName());
         link(featureNameShape, feature);
@@ -117,19 +127,12 @@ public class AddFeatureFeature extends AbstractAddFeature {
         ChopboxAnchor chopBoxAnchor = peService.createChopboxAnchor(featureContainerShape);
         gaService.createInvisibleRectangle(chopBoxAnchor);
 
-        // add the anchor for input connections
-        BoxRelativeAnchor inputAnchor = peService.createBoxRelativeAnchor(featureContainerShape);
-        inputAnchor.setRelativeHeight(0.0);
-        inputAnchor.setRelativeWidth(0.5);
-        gaService.createInvisibleRectangle(inputAnchor);
-        peService.setPropertyValue(inputAnchor, "type", "input");
+        // create anchors for connections
+        createConnectionAnchors(featureContainerShape);
 
-        // add the anchor for output connections
-        BoxRelativeAnchor outputAnchor = peService.createBoxRelativeAnchor(featureContainerShape);
-        outputAnchor.setRelativeHeight(1.0);
-        outputAnchor.setRelativeWidth(0.5);
-        gaService.createInvisibleRectangle(outputAnchor);
-        peService.setPropertyValue(outputAnchor, "type", "output");
+        // draw expand sign
+        ContainerShape expandSignContainer = drawExpadSign(featureContainerShape);
+        link(expandSignContainer, feature);
 
         // activate direct editing after Feature object creation
         IDirectEditingInfo directEditingInfo = getFeatureProvider().getDirectEditingInfo();
@@ -139,5 +142,72 @@ public class AddFeatureFeature extends AbstractAddFeature {
 
         // Return the root pictogram element
         return featureContainerShape;
+    }
+
+    /**
+     * Creates anchors for connections.
+     * 
+     * @param featureContainerShape
+     *            the main container shape of the Feature
+     */
+    private void createConnectionAnchors(ContainerShape featureContainerShape) {
+        IPeService peService = Graphiti.getPeService();
+        IGaService gaService = Graphiti.getGaService();
+
+        // add the anchor for input connections
+        BoxRelativeAnchor inputAnchor = peService.createBoxRelativeAnchor(featureContainerShape);
+        inputAnchor.setRelativeHeight(0.0);
+        inputAnchor.setRelativeWidth(0.5);
+        gaService.createInvisibleRectangle(inputAnchor);
+        peService.setPropertyValue(inputAnchor, Properties.PROP_KEY_ANCHOR_TYPE, Properties.PROP_VAL_ANCHOR_TYPE_INPUT);
+
+        // add the anchor for output connections
+        BoxRelativeAnchor outputAnchor = peService.createBoxRelativeAnchor(featureContainerShape);
+        outputAnchor.setRelativeHeight(1.0);
+        outputAnchor.setRelativeWidth(0.5);
+        gaService.createInvisibleRectangle(outputAnchor);
+        peService.setPropertyValue(outputAnchor, Properties.PROP_KEY_ANCHOR_TYPE, //
+                Properties.PROP_VAL_ANCHOR_TYPE_OUTPUT);
+    }
+
+    /**
+     * Draws expand sign. A Features with child Features can be collapsed (see
+     * {@link CollapseFeatureFeature}) to hide the child elements and expanded (see
+     * {@link ExpandFeatureFeature}) to show this. The expand sign is only shown by Features with
+     * child Features.
+     * 
+     * @param featureContainerShape
+     *            the main container shape of the Feature
+     * @return the container shape of drown expand sign
+     * 
+     */
+    private ContainerShape drawExpadSign(ContainerShape featureContainerShape) {
+        IPeService peService = Graphiti.getPeService();
+        IGaService gaService = Graphiti.getGaService();
+        // the expand sign container
+        ContainerShape expandSignContainer = peService.createContainerShape(featureContainerShape, false);
+        expandSignContainer.setVisible(false);
+        peService.setPropertyValue(expandSignContainer, Properties.PROP_KEY_CONTAINER_TYPE,
+                Properties.PROP_VAL_CONTAINER_TYPE_EXPANDSIGN);
+
+        // the border rectangle
+        Rectangle expandRectangle = gaService.createRectangle(expandSignContainer);
+        expandRectangle.setBackground(manageColor(ColorConstant.WHITE));
+        expandRectangle.setFilled(true);
+        int x = featureContainerShape.getGraphicsAlgorithm().getWidth() - EXPAND_SIGN_SIZE - 5;
+        int y = featureContainerShape.getGraphicsAlgorithm().getHeight() - EXPAND_SIGN_SIZE - 5;
+        gaService.setLocationAndSize(expandRectangle, x, y, EXPAND_SIGN_SIZE, EXPAND_SIGN_SIZE);
+
+        // draw lines for plus sign
+        // vertical line
+        Shape xLineShape = peService.createShape(expandSignContainer, false);
+        int[] points = new int[] { EXPAND_SIGN_SIZE / 2, 1, EXPAND_SIGN_SIZE / 2, EXPAND_SIGN_SIZE - 2 };
+        gaService.createPolyline(xLineShape, points);
+        // horizontal line
+        Shape yLineShape = peService.createShape(expandSignContainer, false);
+        points = new int[] { 1, EXPAND_SIGN_SIZE / 2, EXPAND_SIGN_SIZE - 2, EXPAND_SIGN_SIZE / 2 };
+        gaService.createPolyline(yLineShape, points);
+
+        return expandSignContainer;
     }
 }

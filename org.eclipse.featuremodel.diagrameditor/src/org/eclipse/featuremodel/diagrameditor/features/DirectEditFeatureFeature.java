@@ -5,6 +5,7 @@ import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.IDirectEditingContext;
 import org.eclipse.graphiti.features.impl.AbstractDirectEditingFeature;
 import org.eclipse.graphiti.func.IDirectEditing;
+import org.eclipse.graphiti.mm.algorithms.AbstractText;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 
 /**
@@ -25,7 +26,9 @@ public class DirectEditFeatureFeature extends AbstractDirectEditingFeature {
     }
 
     /**
-     * Checks whether the current pictogram element of the given context can be direct edited.
+     * Checks whether the current pictogram element of the given context can be direct edited. This
+     * implementation returns <code>true</code> if the pictogram element represents a Feature and
+     * graphics algorithm is a text field.
      * 
      * @param context
      *            The context.
@@ -34,7 +37,10 @@ public class DirectEditFeatureFeature extends AbstractDirectEditingFeature {
     @Override
     public boolean canDirectEdit(final IDirectEditingContext context) {
         Object bo = getBusinessObjectForPictogramElement(context.getPictogramElement());
-        return bo instanceof Feature;
+        if (bo instanceof Feature && context.getGraphicsAlgorithm() instanceof AbstractText) {
+            return true;
+        }
+        return false;
     }
 
     /**

@@ -1,5 +1,7 @@
 package org.eclipse.featuremodel.diagrameditor.features;
 
+import java.util.List;
+
 import org.eclipse.featuremodel.Feature;
 import org.eclipse.featuremodel.Group;
 import org.eclipse.featuremodel.diagrameditor.utilities.BOUtil;
@@ -8,7 +10,9 @@ import org.eclipse.graphiti.features.IRemoveFeature;
 import org.eclipse.graphiti.features.context.IRemoveContext;
 import org.eclipse.graphiti.features.context.impl.RemoveContext;
 import org.eclipse.graphiti.features.impl.DefaultRemoveFeature;
+import org.eclipse.graphiti.mm.pictograms.Anchor;
 import org.eclipse.graphiti.mm.pictograms.Connection;
+import org.eclipse.graphiti.mm.pictograms.ConnectionDecorator;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.services.Graphiti;
@@ -98,6 +102,24 @@ public class RemovFeatureFeature extends DefaultRemoveFeature {
                         getFeatureProvider());
                 this.updatePictogramElement(c);
             }
+        }
+    }
+
+    /**
+     * Removes all connections of the given anchor.
+     * 
+     * @param anchor
+     *            the anchor
+     */
+    @Override
+    protected void removeAllConnections(Anchor anchor) {
+        List<Connection> allConnections = Graphiti.getPeService().getAllConnections(anchor);
+        for (Connection connection : allConnections) {
+            ConnectionDecorator[] decorators = connection.getConnectionDecorators().toArray(new ConnectionDecorator[0]);
+            for (ConnectionDecorator decorator : decorators) {
+                Graphiti.getPeService().deletePictogramElement(decorator);
+            }
+            Graphiti.getPeService().deletePictogramElement(connection);
         }
     }
 }

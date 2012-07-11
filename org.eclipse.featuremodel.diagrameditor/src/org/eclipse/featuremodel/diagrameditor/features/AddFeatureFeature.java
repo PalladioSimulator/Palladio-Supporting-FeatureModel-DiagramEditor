@@ -114,13 +114,13 @@ public class AddFeatureFeature extends AbstractAddFeature {
 
         // Create the Feature name field
         Shape featureNameShape = peService.createShape(featureContainerShape, false);
-        Text featureNameText = gaService.createText(featureNameShape);
-        featureNameText.setForeground(manageColor(ColorConstant.BLACK));
-        featureNameText.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER);
-        featureNameText.setVerticalAlignment(Orientation.ALIGNMENT_CENTER);
-        gaService.setLocationAndSize(featureNameText, 10, 10, FEATURE_FIGURE_WIDTH - 20, 20);
+        Text text = gaService.createText(featureNameShape);
+        text.setForeground(manageColor(ColorConstant.BLACK));
+        text.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER);
+        text.setVerticalAlignment(Orientation.ALIGNMENT_CENTER);
+        gaService.setLocationAndSize(text, 10, 10, featureRectangle.getWidth() - 20, featureRectangle.getHeight() - 20);
         // gaService.createFont(featureNameText, "Arial", 16);
-        featureNameText.setValue(feature.getName());
+        text.setValue(feature.getName());
         link(featureNameShape, feature);
 
         // add a chopbox anchor to the shape
@@ -138,7 +138,7 @@ public class AddFeatureFeature extends AbstractAddFeature {
         IDirectEditingInfo directEditingInfo = getFeatureProvider().getDirectEditingInfo();
         directEditingInfo.setMainPictogramElement(featureContainerShape);
         directEditingInfo.setPictogramElement(featureNameShape);
-        directEditingInfo.setGraphicsAlgorithm(featureNameText);
+        directEditingInfo.setGraphicsAlgorithm(text);
 
         // Return the root pictogram element
         return featureContainerShape;

@@ -1,12 +1,16 @@
 package org.eclipse.featuremodel.diagrameditor.features;
 
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.featuremodel.Feature;
 import org.eclipse.featuremodel.Group;
 import org.eclipse.featuremodel.diagrameditor.utilities.BOUtil;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.IResizeShapeContext;
 import org.eclipse.graphiti.features.impl.DefaultResizeShapeFeature;
+import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.pictograms.Connection;
+import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.services.Graphiti;
 
@@ -66,6 +70,20 @@ public class ResizeFeatureFeature extends DefaultResizeShapeFeature {
 
         Feature movedFeature = (Feature) this.getFeatureProvider().getBusinessObjectForPictogramElement(
                 context.getShape());
+        
+        // update the inner text label to the new size
+        EList<EObject> contents = shape.eContents();
+        for (EObject eObject : contents) {
+            if (eObject instanceof PictogramElement) {
+                PictogramElement innerPictogram = (PictogramElement) eObject;
+                if (innerPictogram.getGraphicsAlgorithm() instanceof Text) {
+                    Graphiti.getGaService()
+                            .setLocationAndSize(innerPictogram.getGraphicsAlgorithm(), 10, 10, shape.getGraphicsAlgorithm().getWidth() - 20, shape.getGraphicsAlgorithm().getHeight() - 20);
+                }
+                this.updatePictogramElement(innerPictogram);
+            }
+            
+        }
 
         // update the parent Group if exists
         if (movedFeature.getParentGroup() != null) {

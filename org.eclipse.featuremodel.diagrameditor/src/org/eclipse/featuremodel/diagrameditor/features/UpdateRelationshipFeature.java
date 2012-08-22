@@ -222,9 +222,9 @@ public class UpdateRelationshipFeature extends AbstractUpdateFeature {
         relationGA.setWidth(15);
         relationGA.setForeground(manageColor(IColorConstant.BLACK));
         if (RelationType.Mandatory.equals(BOUtil.getRelationType(group))) {
-            relationGA.setBackground(manageColor(ColorConstant.WHITE));
-        } else {
             relationGA.setBackground(manageColor(ColorConstant.BLACK));
+        } else {
+            relationGA.setBackground(manageColor(ColorConstant.WHITE));
         }
         relationGA.setLineWidth(2);
     }

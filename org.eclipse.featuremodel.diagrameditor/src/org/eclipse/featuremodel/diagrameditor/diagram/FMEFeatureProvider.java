@@ -55,7 +55,6 @@ import org.eclipse.graphiti.ui.features.DefaultFeatureProvider;
  * {@link FMEFeatureProvider} is used by the Graphiti framework to find out which operations are
  * supported by this editor in the current situation.
  * 
- * @author Alexander Moor
  */
 public class FMEFeatureProvider extends DefaultFeatureProvider {
 

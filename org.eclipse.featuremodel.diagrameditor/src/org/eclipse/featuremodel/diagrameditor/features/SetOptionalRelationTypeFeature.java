@@ -15,7 +15,6 @@ import org.eclipse.graphiti.mm.pictograms.PictogramElement;
  * Feature handle changing the single relation type of a Group model object from
  * {@link RelationType#Mandatory} to the {@link RelationType#Optional}.
  * 
- * @author Alexander Moor
  */
 public class SetOptionalRelationTypeFeature extends AbstractCustomFeature {
 

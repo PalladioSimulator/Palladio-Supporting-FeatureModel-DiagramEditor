@@ -14,7 +14,6 @@ import org.eclipse.graphiti.mm.pictograms.Shape;
 /**
  * Feature enables direct editing of a Feature name on mouse double click.
  * 
- * @author Alexander Moor
  */
 public class DirectEditDoubleClickFeature extends AbstractCustomFeature {
 

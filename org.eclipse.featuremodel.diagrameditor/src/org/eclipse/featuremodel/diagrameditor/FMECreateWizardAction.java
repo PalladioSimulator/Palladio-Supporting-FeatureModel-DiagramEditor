@@ -11,7 +11,6 @@ import org.eclipse.ui.IWorkbenchPart;
  * This class handle the context menu action in the project explorer to create a new Feature
  * Diagram.
  * 
- * @author Alexander Moor
  * 
  */
 public class FMECreateWizardAction implements IObjectActionDelegate {

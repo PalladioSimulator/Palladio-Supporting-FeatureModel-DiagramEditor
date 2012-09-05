@@ -5,7 +5,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 /**
  * <code>IdGen</code> supports the generating of unique ids.
  * 
- * @author Alexander Moor
  * 
  */
 public class IdGen {

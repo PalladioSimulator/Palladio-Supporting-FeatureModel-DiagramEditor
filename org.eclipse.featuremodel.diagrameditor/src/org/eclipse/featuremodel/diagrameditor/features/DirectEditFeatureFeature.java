@@ -11,7 +11,6 @@ import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 /**
  * Feature for enabling direct editing of the name of a Feature.
  * 
- * @author Alexander Moor
  */
 public class DirectEditFeatureFeature extends AbstractDirectEditingFeature {
 

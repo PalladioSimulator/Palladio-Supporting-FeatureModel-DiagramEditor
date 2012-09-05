@@ -30,7 +30,6 @@ import org.eclipse.ui.dialogs.ResourceSelectionDialog;
  * The wizard page to get informations for creating a new Feature Diagram. It includes dialogs to
  * create a new Feature Model or load an existing.
  * 
- * @author Alexander Moor
  */
 public class FMEWizardPage extends WizardPage implements Listener {
 

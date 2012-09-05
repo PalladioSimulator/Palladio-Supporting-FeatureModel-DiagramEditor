@@ -6,7 +6,6 @@ import org.eclipse.graphiti.tb.IToolBehaviorProvider;
 /**
  * Defines the diagram type provider.
  * 
- * @author Alexander Moor
  */
 public class FMEDiagramTypeProvider extends AbstractDiagramTypeProvider {
 

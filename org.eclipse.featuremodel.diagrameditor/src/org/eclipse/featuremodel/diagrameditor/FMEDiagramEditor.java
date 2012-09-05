@@ -9,7 +9,6 @@ import org.eclipse.swt.SWT;
 /**
  * A diagram editor for Feature Diagrams.
  * 
- * @author Alexander Moor
  */
 public class FMEDiagramEditor extends DiagramEditor {
 

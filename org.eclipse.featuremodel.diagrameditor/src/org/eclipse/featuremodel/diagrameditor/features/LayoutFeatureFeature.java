@@ -14,7 +14,6 @@ import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 /**
  * Layouts the new Feature pictogram element added to the diagram.
  * 
- * @author Alexander Moor
  */
 public class LayoutFeatureFeature extends AbstractLayoutFeature {
 

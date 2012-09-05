@@ -15,7 +15,6 @@ import org.eclipse.graphiti.mm.pictograms.PictogramElement;
  * Feature handle changing the set relation type of a Group model object from the
  * {@link RelationType#OR} to the {@link RelationType#XOR}.
  * 
- * @author Alexander Moor
  */
 public class SetXORRelationTypeFeature extends AbstractCustomFeature {
 

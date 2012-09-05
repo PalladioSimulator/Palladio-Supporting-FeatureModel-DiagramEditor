@@ -17,7 +17,6 @@ import org.eclipse.graphiti.util.IColorConstant;
  * Feature handle adding to the diagram a graphical representation of an existing Group model
  * object.
  * 
- * @author Alexander Moor
  */
 public class AddGroupFeature extends AbstractAddFeature {
 

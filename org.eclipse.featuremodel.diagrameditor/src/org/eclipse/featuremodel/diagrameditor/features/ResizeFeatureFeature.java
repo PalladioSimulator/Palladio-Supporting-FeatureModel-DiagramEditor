@@ -17,7 +17,6 @@ import org.eclipse.graphiti.services.Graphiti;
 /**
  * Feature handle resizing of the pictogram element represents a Feature.
  * 
- * @author Alexander Moor
  */
 public class ResizeFeatureFeature extends DefaultResizeShapeFeature {
 

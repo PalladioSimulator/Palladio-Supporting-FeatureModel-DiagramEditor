@@ -14,7 +14,6 @@ import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 /**
  * This class contains help methods to perform work with Feature Model objects.
  * 
- * @author Alexander Moor
  * 
  */
 public class BOUtil {

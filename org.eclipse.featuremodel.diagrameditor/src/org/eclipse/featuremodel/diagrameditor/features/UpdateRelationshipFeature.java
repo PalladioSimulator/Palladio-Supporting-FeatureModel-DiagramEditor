@@ -30,7 +30,6 @@ import org.eclipse.graphiti.util.IColorConstant;
 /**
  * Feature handle updating any changes made to a Group model object.
  * 
- * @author Alexander Moor
  */
 public class UpdateRelationshipFeature extends AbstractUpdateFeature {
 

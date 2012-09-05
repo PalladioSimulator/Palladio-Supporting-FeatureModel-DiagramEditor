@@ -32,7 +32,6 @@ import org.eclipse.ui.statushandlers.StatusManager;
  * Diagram editor help methods. It contains functions to handle resources e.g. to create Feature
  * Model files/models or Feature Diagram files/models or save Feature Model objects to the file.
  * 
- * @author Alexander Moor
  */
 public class FMEDiagramEditorUtil {
 

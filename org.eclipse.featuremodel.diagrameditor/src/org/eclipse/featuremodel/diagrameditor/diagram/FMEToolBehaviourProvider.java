@@ -33,7 +33,6 @@ import org.eclipse.graphiti.tb.IContextMenuEntry;
  * clicking is handled, that some special rendering is necessary for certain objects, how zooming is
  * handled and so on.
  * 
- * @author Alexander Moor
  */
 public class FMEToolBehaviourProvider extends DefaultToolBehaviorProvider {
 

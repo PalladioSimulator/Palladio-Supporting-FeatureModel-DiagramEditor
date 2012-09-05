@@ -25,7 +25,6 @@ import org.eclipse.graphiti.util.ColorConstant;
  * Feature handle adding to the diagram a graphical representation of an existing Feature model
  * object.
  * 
- * @author Alexander Moor
  */
 public class AddFeatureFeature extends AbstractAddFeature {
 

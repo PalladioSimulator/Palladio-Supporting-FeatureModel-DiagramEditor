@@ -22,7 +22,6 @@ import org.eclipse.graphiti.services.Graphiti;
 /**
  * Feature handle moving of the pictogram element represents Feature.
  * 
- * @author Alexander Moor
  */
 public class MoveFeatureFeature extends DefaultMoveShapeFeature {
 

@@ -21,7 +21,6 @@ import org.eclipse.graphiti.mm.pictograms.Shape;
 /**
  * Feature handle creating a new Feature model object.
  * 
- * @author Alexander Moor
  */
 public class CreateFeatureFeature extends AbstractCreateFeature {
 

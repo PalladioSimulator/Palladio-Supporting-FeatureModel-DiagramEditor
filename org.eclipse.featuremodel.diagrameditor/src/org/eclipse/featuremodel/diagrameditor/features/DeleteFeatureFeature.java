@@ -16,7 +16,6 @@ import org.eclipse.graphiti.ui.features.DefaultDeleteFeature;
  * Feature handle deleting of a Feature model object. All child Features and Groups are deleted
  * before a Feature object is deleted.
  * 
- * @author Alexander Moor
  */
 public class DeleteFeatureFeature extends DefaultDeleteFeature {
 

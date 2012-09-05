@@ -14,7 +14,6 @@ import org.eclipse.graphiti.mm.pictograms.Shape;
 /**
  * Feature handle updating any changes made to a Feature model object.
  * 
- * @author Alexander Moor
  */
 public class UpdateFeatureFeature extends AbstractUpdateFeature {
 

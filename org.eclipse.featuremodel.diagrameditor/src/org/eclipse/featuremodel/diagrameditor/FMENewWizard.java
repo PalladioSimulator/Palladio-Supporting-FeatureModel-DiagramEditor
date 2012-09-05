@@ -21,7 +21,6 @@ import org.eclipse.ui.actions.WorkspaceModifyOperation;
  * The wizard for creation of new Feature Diagrams. A new Feature Model is created or an existing
  * loaded.
  * 
- * @author Alexander Moor
  */
 public class FMENewWizard extends Wizard implements INewWizard {
 

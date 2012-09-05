@@ -21,7 +21,6 @@ import org.eclipse.graphiti.services.Graphiti;
  * Feature handle removing of a Feature pictogram element. All child Features and Groups are removed
  * before a Feature object is removed.
  * 
- * @author Alexander Moor
  */
 public class RemovFeatureFeature extends DefaultRemoveFeature {
 

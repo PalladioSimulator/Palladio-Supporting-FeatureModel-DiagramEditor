@@ -15,7 +15,6 @@ import org.eclipse.graphiti.services.Graphiti;
  * collapsed (see {@link CollapseFeatureFeature}) to hide the child elements and expanded (see
  * {@link ExpandFeatureFeature}) to show this.
  * 
- * @author Alexander Moor
  */
 public class CollapseFeatureFeature extends AbstractCustomFeature {
 

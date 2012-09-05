@@ -20,7 +20,6 @@ import org.eclipse.graphiti.mm.pictograms.PictogramElement;
  * Feature handle adding to a diagram a graphical representation of an existing Feature Model
  * object.
  * 
- * @author Alexander Moor
  */
 public class AddFeatureModelFeature extends AbstractAddFeature {
 

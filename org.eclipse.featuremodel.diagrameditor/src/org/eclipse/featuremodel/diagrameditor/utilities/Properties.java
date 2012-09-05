@@ -5,7 +5,6 @@ package org.eclipse.featuremodel.diagrameditor.utilities;
  * PictogramElement or GraphicsAlgorithm). Every property container may include custom properties
  * {@link org.eclipse.graphiti.mm.Property} to describe given property container.
  * 
- * @author Alexander Moor
  * 
  */
 public class Properties {

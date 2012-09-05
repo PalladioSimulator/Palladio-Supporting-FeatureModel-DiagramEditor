@@ -25,7 +25,6 @@ import org.eclipse.graphiti.mm.pictograms.Shape;
 /**
  * Layouts the tree structure of the Feature Diagram.
  * 
- * @author Alexander Moor
  */
 public class LayoutDiagramFeature extends AbstractLayoutFeature {
 

@@ -8,7 +8,6 @@ import org.eclipse.jface.action.IToolBarManager;
  * This class is responsible for managing the installation and removal of global menus, menu items,
  * and toolbar buttons for a editor.
  * 
- * @author Alexander Moor
  */
 public class FMEEditorActionBarContributor extends DiagramEditorActionBarContributor {
 

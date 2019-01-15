@@ -8,7 +8,7 @@
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
 <unit id="org.eclipse.graphiti.feature.feature.group" version="0.9.1.v20120919-0732"/>
 <unit id="org.eclipse.graphiti.export.feature.feature.group" version="0.9.1.v20120919-0732"/>
-<unit id="org.eclipse.emf.cdo.dawn.ecoretools.diagram.dawn" version="1.0.0.v20120911-1146"/>
+<unit id="org.eclipse.emf.ecoretools.feature.group" version="1.1.0.201205150811"/>
 <repository location="http://download.eclipse.org/releases/juno/201209280900/"/>
 </location>
 </locations>
